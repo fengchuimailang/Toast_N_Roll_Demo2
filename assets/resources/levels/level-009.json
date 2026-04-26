@@ -1,0 +1,79 @@
+{
+  "levelId": 9,
+  "levelName": "双味调和",
+  "description": "两种口味混合，小心别搞混了顾客的需求！",
+  "unlockCondition": {
+    "prevLevel": 8
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 68,
+      "matcha": 32
+    },
+    "refillBias": {
+      "original": 72,
+      "matcha": 28
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 68,
+        "matcha": 32
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 72,
+        "matcha": 28
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 3,
+    "basePatience": 11,
+    "queuePatienceOffset": 8,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 1500,
+    "twoStars": 3000,
+    "threeStars": 4500
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.39
+  }
+}

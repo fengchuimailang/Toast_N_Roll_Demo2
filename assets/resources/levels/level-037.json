@@ -1,0 +1,85 @@
+{
+  "levelId": 37,
+  "levelName": "疯狂节奏",
+  "description": "顾客如潮水般涌来，你能坚持住吗？",
+  "unlockCondition": {
+    "prevLevel": 36
+  },
+  "difficulty": "hard",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 7,
+    "basePatience": 7,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 6300,
+    "twoStars": 12600,
+    "threeStars": 18900
+  },
+  "difficultyScaling": {
+    "maxChainCount": 5,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.6699999999999999
+  }
+}

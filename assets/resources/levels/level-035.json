@@ -1,0 +1,85 @@
+{
+  "levelId": 35,
+  "levelName": "短暂喘息",
+  "description": "给你一点喘息时间，但别放松太久！",
+  "unlockCondition": {
+    "prevLevel": 34
+  },
+  "difficulty": "hard",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 6,
+    "basePatience": 7,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 4500,
+    "twoStars": 9000,
+    "threeStars": 13500
+  },
+  "difficultyScaling": {
+    "maxChainCount": 5,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.65
+  }
+}

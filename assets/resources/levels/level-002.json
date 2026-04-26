@@ -1,0 +1,73 @@
+{
+  "levelId": 2,
+  "levelName": "初试身手",
+  "description": "你已经掌握了基本技巧，来挑战更高的目标吧！",
+  "unlockCondition": {
+    "prevLevel": 1
+  },
+  "difficulty": "tutorial",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        38,
+        34,
+        18,
+        10,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        36,
+        32,
+        20,
+        12,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 1,
+    "basePatience": 20,
+    "queuePatienceOffset": 6,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 200,
+    "twoStars": 400,
+    "threeStars": 600
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 0,
+    "ingredientDiversity": 0.32
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "levelId": 10,
+  "levelName": "甜蜜考验",
+  "description": "抹茶口味占比提升，考验你的应变能力。",
+  "unlockCondition": {
+    "prevLevel": 9
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 62,
+      "matcha": 38
+    },
+    "refillBias": {
+      "original": 66,
+      "matcha": 34
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 62,
+        "matcha": 38
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 66,
+        "matcha": 34
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 3,
+    "basePatience": 12,
+    "queuePatienceOffset": 9,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 1800,
+    "twoStars": 3600,
+    "threeStars": 5400
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.4
+  }
+}

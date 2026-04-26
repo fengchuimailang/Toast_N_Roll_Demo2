@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "flavors": [
+    {
+      "flavorId": "original",
+      "flavorName": "原味",
+      "unlockLevel": 1,
+      "chain": {
+        "1": { "id": "wheat_original", "name": "小麦", "image": "/assets/ingredients/block_wheat_original.png" },
+        "2": { "id": "flour_original", "name": "面粉", "image": "/assets/ingredients/block_flour_original.png" },
+        "3": { "id": "dough_original", "name": "面团", "image": "/assets/ingredients/block_dough_original.png" },
+        "4": { "id": "bread_original", "name": "面包坯", "image": "/assets/ingredients/block_bread_original.png" },
+        "5": { "id": "toast_original", "name": "吐司", "image": "/assets/ingredients/block_toast_original.png" },
+        "6": { "id": "gift_original", "name": "原味礼盒", "image": "/assets/ingredients/block_gift_original.png" }
+      },
+      "visuals": {
+        "primaryColor": "#F5DEB3",
+        "secondaryColor": "#D2691E",
+        "pattern": "none"
+      }
+    },
+    {
+      "flavorId": "strawberry",
+      "flavorName": "草莓",
+      "unlockLevel": 8,
+      "chain": {
+        "1": { "id": "wheat_strawberry", "name": "草莓小麦", "image": "/assets/ingredients/block_wheat_strawberry.png" },
+        "2": { "id": "flour_strawberry", "name": "草莓面粉", "image": "/assets/ingredients/block_flour_strawberry.png" },
+        "3": { "id": "dough_strawberry", "name": "草莓面团", "image": "/assets/ingredients/block_dough_strawberry.png" },
+        "4": { "id": "bread_strawberry", "name": "草莓面包坯", "image": "/assets/ingredients/block_bread_strawberry.png" },
+        "5": { "id": "toast_strawberry", "name": "草莓吐司", "image": "/assets/ingredients/block_toast_strawberry.png" },
+        "6": { "id": "gift_strawberry", "name": "草莓礼盒", "image": "/assets/ingredients/block_gift_strawberry.png" }
+      },
+      "visuals": {
+        "primaryColor": "#FFB6C1",
+        "secondaryColor": "#FF69B4",
+        "pattern": "dots"
+      }
+    },
+    {
+      "flavorId": "matcha",
+      "flavorName": "抹茶",
+      "unlockLevel": 15,
+      "chain": {
+        "1": { "id": "wheat_matcha", "name": "抹茶小麦", "image": "/assets/ingredients/block_wheat_matcha.png" },
+        "2": { "id": "flour_matcha", "name": "抹茶面粉", "image": "/assets/ingredients/block_flour_matcha.png" },
+        "3": { "id": "dough_matcha", "name": "抹茶面团", "image": "/assets/ingredients/block_dough_matcha.png" },
+        "4": { "id": "bread_matcha", "name": "抹茶面包坯", "image": "/assets/ingredients/block_bread_matcha.png" },
+        "5": { "id": "toast_matcha", "name": "抹茶吐司", "image": "/assets/ingredients/block_toast_matcha.png" },
+        "6": { "id": "gift_matcha", "name": "抹茶礼盒", "image": "/assets/ingredients/block_gift_matcha.png" }
+      },
+      "visuals": {
+        "primaryColor": "#8B4513",
+        "secondaryColor": "#654321",
+        "pattern": "stripes"
+      }
+    }
+  ]
+}

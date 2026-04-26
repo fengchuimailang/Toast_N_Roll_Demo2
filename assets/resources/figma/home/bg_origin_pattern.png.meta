@@ -1,0 +1,14 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": false,
+  "uuid": "bd2e6787-e766-45a8-96c6-026cf3c502ab",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": false,
+    "hasAlpha": true,
+    "redirect": "bd2e6787-e766-45a8-96c6-026cf3c502ab@6c48a"
+  }
+}

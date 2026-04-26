@@ -1,0 +1,85 @@
+{
+  "levelId": 48,
+  "levelName": "生死时速",
+  "description": "时间就是生命，速度决定成败！",
+  "unlockCondition": {
+    "prevLevel": 47
+  },
+  "difficulty": "hard",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 10,
+    "basePatience": 8,
+    "queuePatienceOffset": 6,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 9000,
+    "twoStars": 18000,
+    "threeStars": 27000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 5,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.78
+  }
+}

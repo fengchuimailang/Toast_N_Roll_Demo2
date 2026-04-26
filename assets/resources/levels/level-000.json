@@ -1,0 +1,213 @@
+{
+  "levelId": 0,
+  "levelName": "调试关：老虎机验证",
+  "description": "固定盘面，一步触发三口味同阶合成，快速验证老虎机弹窗。",
+  "unlockCondition": {
+    "prevLevel": 0
+  },
+  "difficulty": "tutorial",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "presetBoard": [
+    [
+      {
+        "type": "toast",
+        "flavor": "matcha"
+      },
+      {
+        "type": "dough",
+        "flavor": "strawberry"
+      },
+      {
+        "type": "flour",
+        "flavor": "original"
+      },
+      {
+        "type": "baking",
+        "flavor": "matcha"
+      },
+      {
+        "type": "toast",
+        "flavor": "strawberry"
+      }
+    ],
+    [
+      {
+        "type": "flour",
+        "flavor": "matcha"
+      },
+      {
+        "type": "toast",
+        "flavor": "original"
+      },
+      {
+        "type": "wheat",
+        "flavor": "strawberry"
+      },
+      {
+        "type": "flour",
+        "flavor": "matcha"
+      },
+      {
+        "type": "dough",
+        "flavor": "original"
+      }
+    ],
+    [
+      {
+        "type": "baking",
+        "flavor": "original"
+      },
+      {
+        "type": "wheat",
+        "flavor": "original"
+      },
+      {
+        "type": "dough",
+        "flavor": "matcha"
+      },
+      {
+        "type": "wheat",
+        "flavor": "matcha"
+      },
+      {
+        "type": "flour",
+        "flavor": "strawberry"
+      }
+    ],
+    [
+      {
+        "type": "toast",
+        "flavor": "strawberry"
+      },
+      {
+        "type": "baking",
+        "flavor": "matcha"
+      },
+      {
+        "type": "gift",
+        "flavor": "original"
+      },
+      {
+        "type": "flour",
+        "flavor": "original"
+      },
+      {
+        "type": "toast",
+        "flavor": "matcha"
+      }
+    ],
+    [
+      {
+        "type": "flour",
+        "flavor": "strawberry"
+      },
+      {
+        "type": "dough",
+        "flavor": "original"
+      },
+      {
+        "type": "toast",
+        "flavor": "matcha"
+      },
+      {
+        "type": "baking",
+        "flavor": "strawberry"
+      },
+      {
+        "type": "gift",
+        "flavor": "matcha"
+      }
+    ]
+  ],
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "maxTier": 6,
+      "tierWeights": [
+        25,
+        20,
+        20,
+        15,
+        10,
+        10
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "maxTier": 6,
+      "tierWeights": [
+        25,
+        20,
+        20,
+        15,
+        10,
+        10
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 1,
+    "basePatience": 9,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 100,
+    "twoStars": 200,
+    "threeStars": 300
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 1
+  },
+  "debug": {
+    "trackProgress": false,
+    "hidden": true
+  },
+  "tutorial": {
+    "enabled": true,
+    "steps": [
+      "交换第2行中间的草莓小麦与其下方食材",
+      "形成原味、草莓、抹茶三种口味各1个的小麦三连",
+      "验证是否触发老虎机弹窗"
+    ]
+  }
+}

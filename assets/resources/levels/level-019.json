@@ -1,0 +1,79 @@
+{
+  "levelId": 19,
+  "levelName": "极限生存",
+  "description": "顾客耐心极低，稍有迟疑就会失去他们！",
+  "unlockCondition": {
+    "prevLevel": 18
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 50,
+      "matcha": 50
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 50
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 5,
+    "basePatience": 8,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 3800,
+    "twoStars": 7600,
+    "threeStars": 11400
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.49
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "levelId": 28,
+  "levelName": "极限步数",
+  "description": "步数极其有限，每一步都是生死抉择！",
+  "unlockCondition": {
+    "prevLevel": 27
+  },
+  "difficulty": "hard",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 7,
+    "basePatience": 7,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 4200,
+    "twoStars": 8400,
+    "threeStars": 12600
+  },
+  "difficultyScaling": {
+    "maxChainCount": 4,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.5800000000000001
+  }
+}

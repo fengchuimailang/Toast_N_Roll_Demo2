@@ -1,0 +1,85 @@
+{
+  "levelId": 39,
+  "levelName": "绝境求生",
+  "description": "几乎不可能完成的任务，证明你的实力！",
+  "unlockCondition": {
+    "prevLevel": 38
+  },
+  "difficulty": "hard",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    },
+    "refillBias": {
+      "original": 34,
+      "matcha": 33,
+      "strawberry": 33
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 34,
+        "matcha": 33,
+        "strawberry": 33
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 8,
+    "basePatience": 7,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 7000,
+    "twoStars": 14000,
+    "threeStars": 21000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 5,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.69
+  }
+}

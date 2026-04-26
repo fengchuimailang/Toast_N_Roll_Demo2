@@ -1,0 +1,79 @@
+{
+  "levelId": 12,
+  "levelName": "手忙脚乱",
+  "description": "三位顾客同时等待，你能应付得来吗？",
+  "unlockCondition": {
+    "prevLevel": 11
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 50,
+      "matcha": 50
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 50
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 3,
+    "basePatience": 8,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 2200,
+    "twoStars": 4400,
+    "threeStars": 6600
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.42
+  }
+}

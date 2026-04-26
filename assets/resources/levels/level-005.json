@@ -1,0 +1,73 @@
+{
+  "levelId": 5,
+  "levelName": "稳步前进",
+  "description": "继续保持节奏，准备迎接更大挑战。",
+  "unlockCondition": {
+    "prevLevel": 4
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        36,
+        32,
+        18,
+        10,
+        4
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        34,
+        30,
+        20,
+        12,
+        4
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 2,
+    "basePatience": 17,
+    "queuePatienceOffset": 12,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 600,
+    "twoStars": 1200,
+    "threeStars": 1800
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 0,
+    "ingredientDiversity": 0.35
+  }
+}

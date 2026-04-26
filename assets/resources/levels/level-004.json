@@ -1,0 +1,73 @@
+{
+  "levelId": 4,
+  "levelName": "从容应对",
+  "description": "稍微放松一下，给你更多思考时间。",
+  "unlockCondition": {
+    "prevLevel": 3
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        36,
+        32,
+        18,
+        10,
+        4
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        34,
+        30,
+        20,
+        12,
+        4
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 1,
+    "basePatience": 17,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 400,
+    "twoStars": 800,
+    "threeStars": 1200
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 0,
+    "ingredientDiversity": 0.33999999999999997
+  }
+}

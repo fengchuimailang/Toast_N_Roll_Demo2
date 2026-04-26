@@ -1,0 +1,79 @@
+{
+  "levelId": 16,
+  "levelName": "节奏加快",
+  "description": "顾客来得更快了，保持冷静！",
+  "unlockCondition": {
+    "prevLevel": 15
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 50,
+      "matcha": 50
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 50
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 4,
+    "basePatience": 8,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 3000,
+    "twoStars": 6000,
+    "threeStars": 9000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.45999999999999996
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "levelId": 23,
+  "levelName": "老虎机挑战",
+  "description": "三种口味均衡分布，老虎机触发概率大增！",
+  "unlockCondition": {
+    "prevLevel": 22
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 42,
+      "matcha": 30,
+      "strawberry": 28
+    },
+    "refillBias": {
+      "original": 46,
+      "matcha": 29,
+      "strawberry": 25
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 42,
+        "matcha": 30,
+        "strawberry": 28
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 46,
+        "matcha": 29,
+        "strawberry": 25
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 4,
+    "basePatience": 9,
+    "queuePatienceOffset": 7,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 3400,
+    "twoStars": 6800,
+    "threeStars": 10200
+  },
+  "difficultyScaling": {
+    "maxChainCount": 4,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.53
+  }
+}

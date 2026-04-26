@@ -1,0 +1,73 @@
+{
+  "levelId": 3,
+  "levelName": "小有成就",
+  "description": "速度加快！顾客开始有点不耐烦了。",
+  "unlockCondition": {
+    "prevLevel": 2
+  },
+  "difficulty": "tutorial",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        38,
+        34,
+        18,
+        10,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        36,
+        32,
+        20,
+        12,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 1,
+    "basePatience": 19,
+    "queuePatienceOffset": 6,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 300,
+    "twoStars": 600,
+    "threeStars": 900
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 0,
+    "ingredientDiversity": 0.32999999999999996
+  }
+}

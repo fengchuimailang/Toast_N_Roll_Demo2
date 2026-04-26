@@ -1,0 +1,79 @@
+{
+  "levelId": 8,
+  "levelName": "抹茶登场",
+  "description": "新口味解锁！注意顾客想要的是哪种礼盒。",
+  "unlockCondition": {
+    "prevLevel": 7
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 76,
+      "matcha": 24
+    },
+    "refillBias": {
+      "original": 80,
+      "matcha": 20
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 76,
+        "matcha": 24
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 80,
+        "matcha": 20
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 2,
+    "basePatience": 11,
+    "queuePatienceOffset": 8,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 1200,
+    "twoStars": 2400,
+    "threeStars": 3600
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.38
+  }
+}

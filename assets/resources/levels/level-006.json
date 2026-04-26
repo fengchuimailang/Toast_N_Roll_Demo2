@@ -1,0 +1,73 @@
+{
+  "levelId": 6,
+  "levelName": "棋盘扩大",
+  "description": "6×6棋盘登场！更多空间，更多可能。",
+  "unlockCondition": {
+    "prevLevel": 5
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 2,
+    "basePatience": 11,
+    "queuePatienceOffset": 8,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 800,
+    "twoStars": 1600,
+    "threeStars": 2400
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.36
+  }
+}

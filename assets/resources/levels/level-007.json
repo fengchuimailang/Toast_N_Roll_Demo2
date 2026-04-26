@@ -1,0 +1,73 @@
+{
+  "levelId": 7,
+  "levelName": "时间压力",
+  "description": "首次引入步数限制，每一步都要精打细算！",
+  "unlockCondition": {
+    "prevLevel": 6
+  },
+  "difficulty": "easy",
+  "gridSize": {
+    "rows": 6,
+    "cols": 6
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        40,
+        30,
+        20,
+        8,
+        2
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 2,
+    "basePatience": 11,
+    "queuePatienceOffset": 8,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 1000,
+    "twoStars": 2000,
+    "threeStars": 3000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.37
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "levelId": 22,
+  "levelName": "三味初体验",
+  "description": "三种口味混合，小心触发老虎机！",
+  "unlockCondition": {
+    "prevLevel": 21
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha",
+      "strawberry"
+    ],
+    "distribution": {
+      "original": 46,
+      "matcha": 28,
+      "strawberry": 26
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 26,
+      "strawberry": 24
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 46,
+        "matcha": 28,
+        "strawberry": 26
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        30,
+        25,
+        25,
+        12,
+        8
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 26,
+        "strawberry": 24
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 4,
+    "basePatience": 9,
+    "queuePatienceOffset": 7,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha",
+      "strawberry"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 3200,
+    "twoStars": 6400,
+    "threeStars": 9600
+  },
+  "difficultyScaling": {
+    "maxChainCount": 4,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.52
+  }
+}

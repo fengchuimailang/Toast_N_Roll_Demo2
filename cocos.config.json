@@ -1,0 +1,25 @@
+{
+    "builder": {
+        "platforms": {},
+        "common": {
+            "binGroupConfig": {
+                "threshold": 16,
+                "enable": false
+            },
+            "polyfills": {
+                "asyncFunctions": true
+            }
+        }
+    },
+    "engine": {
+        "designResolution": {
+            "width": 750,
+            "height": 1334
+        }
+    },
+    "script": {
+        "preserveSymlinks": true
+    },
+    "version": "1.0.0",
+    "$schema": "./temp/cli/cocos.config.schema.json"
+}

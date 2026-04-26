@@ -1,0 +1,81 @@
+{
+  "levelId": 1,
+  "levelName": "初识烘焙",
+  "description": "欢迎来到吐司面包店！学习基础的三消合成玩法。",
+  "unlockCondition": {
+    "prevLevel": 0
+  },
+  "difficulty": "tutorial",
+  "gridSize": {
+    "rows": 5,
+    "cols": 5
+  },
+  "flavors": {
+    "available": [
+      "original"
+    ],
+    "distribution": {
+      "original": 100
+    },
+    "refillBias": {
+      "original": 100
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        38,
+        34,
+        18,
+        10,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        36,
+        32,
+        20,
+        12,
+        0
+      ],
+      "flavorDistribution": {
+        "original": 100
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 1,
+    "basePatience": 20,
+    "queuePatienceOffset": 6,
+    "entryGraceTurns": 2,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 100,
+    "twoStars": 200,
+    "threeStars": 300
+  },
+  "difficultyScaling": {
+    "maxChainCount": 2,
+    "safeSpawnRange": 0,
+    "ingredientDiversity": 0.31
+  },
+  "tutorial": {
+    "enabled": true,
+    "steps": [
+      "拖动相邻食材交换位置",
+      "三个相同食材连成一线即可合成",
+      "合成进阶食材满足顾客需求"
+    ]
+  }
+}

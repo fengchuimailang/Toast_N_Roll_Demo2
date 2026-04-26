@@ -1,0 +1,79 @@
+{
+  "levelId": 14,
+  "levelName": "缓冲地带",
+  "description": "稍微放松一下，为接下来的挑战做准备。",
+  "unlockCondition": {
+    "prevLevel": 13
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 50,
+      "matcha": 50
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 50
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 3,
+    "basePatience": 8,
+    "queuePatienceOffset": 5,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      1,
+      2
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 2000,
+    "twoStars": 4000,
+    "threeStars": 6000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 3,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.44
+  }
+}

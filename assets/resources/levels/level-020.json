@@ -1,0 +1,79 @@
+{
+  "levelId": 20,
+  "levelName": "双味大师",
+  "description": "恭喜！你已经成为双口味的大师！",
+  "unlockCondition": {
+    "prevLevel": 19
+  },
+  "difficulty": "normal",
+  "gridSize": {
+    "rows": 7,
+    "cols": 7
+  },
+  "flavors": {
+    "available": [
+      "original",
+      "matcha"
+    ],
+    "distribution": {
+      "original": 50,
+      "matcha": 50
+    },
+    "refillBias": {
+      "original": 50,
+      "matcha": 50
+    }
+  },
+  "ingredientSpawn": {
+    "initial": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    },
+    "refill": {
+      "tierWeights": [
+        35,
+        28,
+        22,
+        10,
+        5
+      ],
+      "flavorDistribution": {
+        "original": 50,
+        "matcha": 50
+      }
+    }
+  },
+  "customers": {
+    "totalCount": 6,
+    "basePatience": 8,
+    "queuePatienceOffset": 6,
+    "entryGraceTurns": 1,
+    "demandCountRange": [
+      2,
+      3
+    ],
+    "allowedFlavors": [
+      "original",
+      "matcha"
+    ]
+  },
+  "starRatings": {
+    "oneStar": 4000,
+    "twoStars": 8000,
+    "threeStars": 12000
+  },
+  "difficultyScaling": {
+    "maxChainCount": 4,
+    "safeSpawnRange": 1,
+    "ingredientDiversity": 0.5
+  }
+}

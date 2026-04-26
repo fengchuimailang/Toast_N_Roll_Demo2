@@ -1,0 +1,13 @@
+{
+  "ver": "1.1.50",
+  "importer": "prefab",
+  "imported": true,
+  "uuid": "6d4be1a3-bdd4-4e9b-ae56-43f2a3b6d4df",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "LoadingOverlayRoot"
+  }
+}
