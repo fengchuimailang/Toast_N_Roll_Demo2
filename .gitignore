@@ -11,3 +11,7 @@ temp/
 # OS
 .DS_Store
 Thumbs.db
+
+
+ref_project/
+build/

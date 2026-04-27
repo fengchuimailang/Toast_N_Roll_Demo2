@@ -5,6 +5,8 @@ import { advanceIngredientWithFlavor, isGiftBox } from '../../domain/core/ingred
 import { MatchDetector } from '../../domain/core/match-detector';
 import type { Cell, Customer, GridPosition, Ingredient } from '../../domain/types';
 import type { LevelConfig } from '../../domain/types/level';
+import { GameMsg } from '../../lbspace/GameMsgTypes';
+import { MsgMgr } from '../../lbspace/MsgMgr';
 import { CocosResourceLoader } from '../../infra/CocosResourceLoader';
 import { LevelProgressStore } from '../../infra/LevelProgressStore';
 
@@ -148,6 +150,8 @@ export class GameSession {
       type: 'bootstrapped',
       snapshot: this.getSnapshot(),
     });
+
+    MsgMgr.emit(GameMsg.SessionStarted, this.levelConfig?.levelId ?? levelId);
   }
 
   async restart(): Promise<void> {
@@ -351,10 +355,15 @@ export class GameSession {
       return false;
     }
 
+    const wasActive = this.toolMode === 'remove';
     this.toolMode = this.toolMode === 'remove' ? null : 'remove';
     this.toolSelection = null;
     this.syncState();
     this.emitNotice(this.toolMode === 'remove' ? '去除模式：点击一个食材立即移除' : '已取消去除模式');
+
+    if (this.toolMode === 'remove' && !wasActive) {
+      MsgMgr.emit(GameMsg.ToolActivated, 'remove');
+    }
     return true;
   }
 
@@ -363,10 +372,15 @@ export class GameSession {
       return false;
     }
 
+    const wasActive = this.toolMode === 'magnet';
     this.toolMode = this.toolMode === 'magnet' ? null : 'magnet';
     this.toolSelection = null;
     this.syncState();
     this.emitNotice(this.toolMode === 'magnet' ? '磁力模式：先选一个食材，再选同阶食材' : '已取消磁力模式');
+
+    if (this.toolMode === 'magnet' && !wasActive) {
+      MsgMgr.emit(GameMsg.ToolActivated, 'magnet');
+    }
     return true;
   }
 
@@ -387,6 +401,8 @@ export class GameSession {
     this.checkGameState();
     this.syncState();
     this.emitNotice('已重新洗牌');
+
+    MsgMgr.emit(GameMsg.ToolUsed, 'shuffle');
     return true;
   }
 
@@ -410,6 +426,8 @@ export class GameSession {
     this.checkGameState();
     this.syncState();
     this.emitNotice('已去除一个食材');
+
+    MsgMgr.emit(GameMsg.ToolUsed, 'remove');
     return true;
   }
 
@@ -469,6 +487,8 @@ export class GameSession {
     this.checkGameState();
     this.syncState();
     this.emitNotice('磁力合成完成');
+
+    MsgMgr.emit(GameMsg.ToolUsed, 'magnet');
     return true;
   }
 
@@ -696,6 +716,8 @@ export class GameSession {
         const score = this.calculateScore();
         this.levelProgressStore.completeLevel(completedLevelId, stars, score);
         this.levelProgressStore.addRunRewards(score, this.customerSystem.getServedCustomersCount());
+
+        MsgMgr.emit(GameMsg.SessionEnded, completedLevelId, 'complete', stars, score);
       }
       this.phase = 'levelComplete';
       return;
@@ -703,6 +725,11 @@ export class GameSession {
 
     const possibleMoves = this.matchDetector.findPossibleMoves(this.board.getAllCells());
     if (possibleMoves.length === 0 && this.board.isFull()) {
+      if (this.phase !== 'gameOver') {
+        const failedLevelId = this.levelConfig?.levelId ?? this.requestedLevelId;
+        const score = this.calculateScore();
+        MsgMgr.emit(GameMsg.SessionEnded, failedLevelId, 'gameOver', 0, score);
+      }
       this.phase = 'gameOver';
       return;
     }

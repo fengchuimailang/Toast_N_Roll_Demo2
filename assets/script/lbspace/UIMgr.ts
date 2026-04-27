@@ -32,63 +32,70 @@ export class UIMgr {
         return this._instance;
     }
 
+    private _dialogParent: Node | null = null;
+    private _topParent: Node | null = null;
+    private _persistParent: Node | null = null;
+
     /** 对话框/弹窗层 */
-    readonly dialogParent: Node;
-
-    /** 顶部提示/Toast 层 */
-    readonly topParent: Node;
-
-    /** 持久化层（跨场景保留） */
-    readonly persistParent: Node;
-
-    private _root: Node;
-
-    private constructor() {
-        this._root = this._createNode('UI-Root', true);
-        this.dialogParent = this._createNode('UI-Dialog');
-        this.topParent = this._createNode('UI-Top');
-        this.persistParent = this._createNode('UI-Persist');
-
-        this._root.on(NodeEventType.SCENE_CHANGED_FOR_PERSISTS, this._onSceneChanged, this);
+    get dialogParent(): Node {
+        this._ensureInit();
+        return this._dialogParent!;
     }
 
-    /**
-     * 创建一个 UI 节点，自动设置 UI_2D 层和全屏对齐
-     */
-    private _createNode(name: string, persist = false): Node {
-        const node = new Node(name);
-        node.layer = Layers.Enum.UI_2D;
+    /** 顶部提示/Toast 层 */
+    get topParent(): Node {
+        this._ensureInit();
+        return this._topParent!;
+    }
 
-        if (persist) {
-            director.addPersistRootNode(node);
-            node.addComponent(RenderRoot2D);
-        } else {
-            node.parent = this._root;
+    /** 持久化层（跨场景保留） */
+    get persistParent(): Node {
+        this._ensureInit();
+        return this._persistParent!;
+    }
+
+    private _root: Node | null = null;
+    private _initialized = false;
+
+    private _ensureInit(): void {
+        if (this._initialized) {
+            return;
+        }
+        this._initialized = true;
+
+        const scene = director.getScene();
+        if (!scene) {
+            throw new Error('[UIMgr] No scene found when initializing');
         }
 
-        const widget = node.addComponent(Widget);
-        widget.top = 0;
-        widget.bottom = 0;
-        widget.left = 0;
-        widget.right = 0;
-        widget.isAlignTop = true;
-        widget.isAlignBottom = true;
-        widget.isAlignLeft = true;
-        widget.isAlignRight = true;
+        this._root = new Node('UI-Root');
+        scene.addChild(this._root);
+        director.addPersistRootNode(this._root);
+        this._root.addComponent(RenderRoot2D);
 
-        return node;
+        this._dialogParent = new Node('UI-Dialog');
+        this._dialogParent.layer = Layers.Enum.UI_2D;
+        this._dialogParent.parent = this._root;
+
+        this._topParent = new Node('UI-Top');
+        this._topParent.layer = Layers.Enum.UI_2D;
+        this._topParent.parent = this._root;
+
+        this._persistParent = new Node('UI-Persist');
+        this._persistParent.layer = Layers.Enum.UI_2D;
+        this._persistParent.parent = this._root;
+
+        this._root.on(NodeEventType.SCENE_CHANGED_FOR_PERSISTS, this._onSceneChanged, this);
     }
 
     /**
      * 场景切换时自动清理非持久化节点
      */
     private _onSceneChanged(): void {
-        for (const child of this.dialogParent.children) {
-            child.destroy();
-        }
-        for (const child of this.topParent.children) {
-            child.destroy();
-        }
+        this._dialogParent?.destroy();
+        this._topParent?.destroy();
+        this._dialogParent = null;
+        this._topParent = null;
     }
 
     /**

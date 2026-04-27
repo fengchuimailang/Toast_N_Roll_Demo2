@@ -1,12 +1,12 @@
 import {
   _decorator,
   Color,
-  Component,
   EventTouch,
   Graphics,
   Label,
   Layers,
   Node,
+  Prefab,
   Sprite,
   UITransform,
   Vec3,
@@ -14,9 +14,10 @@ import {
 
 import {
   GameSession,
-  type SessionEvent,
   type SessionStateSnapshot,
 } from '../game/session/GameSession';
+import { DialogController } from '../lbspace/DialogController';
+import { GameMsg, MsgMgr } from '../lbspace/lbspace';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
 
 const { ccclass } = _decorator;
@@ -32,7 +33,7 @@ interface GraphicsNodeRefs {
 }
 
 @ccclass('SettlementOverlayView')
-export class SettlementOverlayView extends Component {
+export class SettlementOverlayView extends DialogController {
   private readonly spriteFrameLoader = new SpriteFrameLoader();
   private scaffoldReady = false;
   private session: GameSession | null = null;
@@ -51,10 +52,23 @@ export class SettlementOverlayView extends Component {
   private starSprites: Sprite[] = [];
   private primaryButton: Node | null = null;
   private secondaryButton: Node | null = null;
+  private pendingSnapshot: SessionStateSnapshot | null = null;
+
+  protected static _getPrefab(): Prefab | null {
+    return null;
+  }
 
   protected onLoad(): void {
     this.ensureScaffold();
     this.node.active = false;
+  }
+
+  protected onEnable(): void {
+    MsgMgr.on(GameMsg.SessionEnded, this._onSessionEnded, this);
+  }
+
+  protected onDisable(): void {
+    MsgMgr.off(GameMsg.SessionEnded, this._onSessionEnded, this);
   }
 
   protected onDestroy(): void {
@@ -73,10 +87,29 @@ export class SettlementOverlayView extends Component {
     this.ensureScaffold();
     this.unsubscribe?.();
     this.unsubscribe = session.subscribe((event) => this.handleSessionEvent(event));
-    this.render(session.getSnapshot());
   }
 
-  private handleSessionEvent(event: SessionEvent): void {
+  protected _open(): void {
+    this.node.active = true;
+    if (this.pendingSnapshot) {
+      this.render(this.pendingSnapshot);
+      this.pendingSnapshot = null;
+    }
+  }
+
+  private _onSessionEnded(levelId: number, reason: 'complete' | 'gameOver', stars: number, score: number): void {
+    if (!this.session) return;
+    this.pendingSnapshot = this.session.getSnapshot();
+    super.open();
+  }
+
+  private handleSessionEvent(event: { type: string; snapshot: SessionStateSnapshot }): void {
+    if (event.type !== 'stateChanged' && event.type !== 'swapResolved' && event.type !== 'bootstrapped') {
+      return;
+    }
+    if (!this.node.active) {
+      return;
+    }
     this.render(event.snapshot);
   }
 
@@ -91,10 +124,12 @@ export class SettlementOverlayView extends Component {
 
     const backdropRefs = this.bindOrCreateGraphicsNode(this.node, 'SettlementBackdrop', Vec3.ZERO, OVERLAY_WIDTH, OVERLAY_HEIGHT);
     this.backdrop = backdropRefs.graphics;
+    this.mask = backdropRefs.node;
 
     const panelRefs = this.bindOrCreateGraphicsNode(this.node, 'SettlementPanel', Vec3.ZERO, PANEL_WIDTH, PANEL_HEIGHT);
     const panelNode = panelRefs.node;
     this.panel = panelRefs.graphics;
+    this.content = panelNode;
 
     const headerRefs = this.bindOrCreateGraphicsNode(panelNode, 'SettlementHeaderBadge', new Vec3(0, 156, 0), 220, 54);
     this.headerBadge = headerRefs.graphics;
@@ -243,11 +278,9 @@ export class SettlementOverlayView extends Component {
     }
 
     if (snapshot.phase === 'playing') {
-      this.node.active = false;
       return;
     }
 
-    this.node.active = true;
     this.titleLabel.color = new Color(90, 58, 35, 255);
     this.summaryLabel.color = new Color(120, 77, 47, 255);
     this.detailLabel.color = new Color(97, 65, 42, 255);

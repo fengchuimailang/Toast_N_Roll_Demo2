@@ -1,7 +1,7 @@
 import {
   _decorator,
   Color,
-  Component,
+  EventTouch,
   Graphics,
   Label,
   Layers,
@@ -10,34 +10,35 @@ import {
   Vec3,
 } from 'cc';
 
+import { TopController } from '../lbspace/TopController';
 import { GameSession, type SessionEvent } from '../game/session/GameSession';
 
 const { ccclass } = _decorator;
 
 const MESSAGE_WIDTH = 520;
 const MESSAGE_HEIGHT = 88;
-const DEFAULT_DURATION_MS = 1800;
 
 type NoticeTone = 'neutral' | 'success' | 'warning';
 
 @ccclass('MessageOverlayView')
-export class MessageOverlayView extends Component {
+export class MessageOverlayView extends TopController {
   private unsubscribe: (() => void) | null = null;
   private background: Graphics | null = null;
   private accent: Graphics | null = null;
   private titleLabel: Label | null = null;
   private messageLabel: Label | null = null;
-  private hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+  protected static _getPrefab(): null {
+    return null;
+  }
 
   protected onLoad(): void {
     this.ensureScaffold();
-    this.node.active = false;
   }
 
   protected onDestroy(): void {
     this.unsubscribe?.();
     this.unsubscribe = null;
-    this.clearTimer();
   }
 
   public bind(session: GameSession): void {
@@ -100,21 +101,23 @@ export class MessageOverlayView extends Component {
     this.drawBackground('neutral');
   }
 
-  private showMessage(message: string, durationMs?: number): void {
+  protected _open(message: string, durationMs?: number): void {
+    const tone = this.resolveTone(message);
+    this.drawBackground(tone);
+    this.titleLabel!.string = this.getTitleByTone(tone);
+    this.messageLabel!.string = message;
+
+    if (durationMs !== undefined) {
+      this.setAutoCloseDelay(durationMs);
+    }
+  }
+
+  public showMessage(message: string, durationMs?: number): void {
     if (!this.titleLabel || !this.messageLabel) {
       return;
     }
 
-    const tone = this.resolveTone(message);
-    this.drawBackground(tone);
-    this.node.active = true;
-    this.titleLabel.string = this.getTitleByTone(tone);
-    this.messageLabel.string = message;
-    this.clearTimer();
-    this.hideTimer = setTimeout(() => {
-      this.node.active = false;
-      this.hideTimer = null;
-    }, durationMs ?? DEFAULT_DURATION_MS);
+    this._open(message, durationMs);
   }
 
   private resolveTone(message: string): NoticeTone {
@@ -154,11 +157,9 @@ export class MessageOverlayView extends Component {
     this.background.fillColor = palette.inner;
     this.background.roundRect(-MESSAGE_WIDTH / 2 + 8, -MESSAGE_HEIGHT / 2 + 8, MESSAGE_WIDTH - 16, MESSAGE_HEIGHT - 16, 24);
     this.background.fill();
-
-    this.accent.clear();
-    this.accent.fillColor = palette.accent;
-    this.accent.roundRect(-6, -(MESSAGE_HEIGHT - 18) / 2, 12, MESSAGE_HEIGHT - 18, 6);
-    this.accent.fill();
+    this.background.fillColor = palette.accent;
+    this.background.roundRect(-6, -(MESSAGE_HEIGHT - 18) / 2, 12, MESSAGE_HEIGHT - 18, 6);
+    this.background.fill();
 
     this.titleLabel.color = palette.title;
     this.messageLabel.color = palette.message;
@@ -197,14 +198,5 @@ export class MessageOverlayView extends Component {
           message: new Color(94, 60, 33, 255),
         };
     }
-  }
-
-  private clearTimer(): void {
-    if (!this.hideTimer) {
-      return;
-    }
-
-    clearTimeout(this.hideTimer);
-    this.hideTimer = null;
   }
 }

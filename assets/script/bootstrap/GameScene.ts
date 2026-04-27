@@ -1,5 +1,6 @@
-import { _decorator, Color, Component, Graphics, Label, Layers, Node, Prefab, UITransform, Vec3, director, instantiate, resources, view } from 'cc';
+import { _decorator, Color, Component, Graphics, Label, Layers, Node, Prefab, Sprite, SpriteFrame, UITransform, Vec3, director, instantiate, resources, view } from 'cc';
 import { GameSession } from '../game/session/GameSession';
+import { PrefabLoader } from '../lbspace/PrefabLoader';
 import { CocosAssetWarmup } from '../infra/CocosAssetWarmup';
 import { LevelProgressStore } from '../infra/LevelProgressStore';
 import { SettingsStore } from '../infra/SettingsStore';
@@ -55,6 +56,7 @@ export class GameScene extends Component {
   private levelButtonNode: Node | null = null;
   private homeButtonNode: Node | null = null;
   private pauseButtonNode: Node | null = null;
+  private backgroundNode: Node | null = null;
   private mode: SceneMode = 'home';
   private levelSelectReturnMode: SceneMode = 'home';
 
@@ -162,6 +164,7 @@ export class GameScene extends Component {
 
   private async startGameScene(): Promise<void> {
     await Promise.all([
+      this.ensureBackground(),
       this.ensureHudView(),
       this.ensureBoardView(),
       this.ensureToolBarView(),
@@ -265,6 +268,36 @@ export class GameScene extends Component {
     const viewNode = await this.instantiateUiRoot('prefabs/HudRoot', 'ProgrammaticHudView', new Vec3(0, 500, 0), HUD_SIZE);
     this.hudView = viewNode.addComponent(HudView);
     this.refreshLayout();
+  }
+
+  private async ensureBackground(): Promise<void> {
+    if (this.backgroundNode) {
+      return;
+    }
+
+    this.backgroundNode = new Node('GameBackground');
+    this.backgroundNode.layer = Layers.Enum.UI_2D;
+    this.backgroundNode.parent = this.node;
+    this.backgroundNode.setPosition(Vec3.ZERO);
+    const transform = this.backgroundNode.addComponent(UITransform);
+    transform.setContentSize(750, 1334);
+
+    const sprite = this.backgroundNode.addComponent(Sprite);
+    sprite.type = Sprite.Type.SIMPLE;
+    sprite.sizeMode = Sprite.SizeMode.CUSTOM;
+    transform.setContentSize(750, 1334);
+
+    await new Promise<void>((resolve) => {
+      resources.load('ui/game_bg/spriteFrame', SpriteFrame, (error, asset) => {
+        if (error) {
+          console.warn('[GameScene] Failed to load game_bg', error);
+          resolve();
+          return;
+        }
+        sprite.spriteFrame = asset;
+        resolve();
+      });
+    });
   }
 
   private async ensureBoardView(): Promise<void> {
@@ -566,7 +599,7 @@ export class GameScene extends Component {
     position: Vec3,
     size: { width: number; height: number },
   ): Promise<Node> {
-    const prefab = await this.loadPrefab(prefabKey);
+    const prefab = await PrefabLoader.load(prefabKey);
     const viewNode = prefab ? instantiate(prefab) : new Node(fallbackName);
     viewNode.name = fallbackName;
     viewNode.layer = Layers.Enum.UI_2D;
@@ -575,23 +608,5 @@ export class GameScene extends Component {
     const transform = viewNode.getComponent(UITransform) ?? viewNode.addComponent(UITransform);
     transform.setContentSize(size.width, size.height);
     return viewNode;
-  }
-
-  private loadPrefab(key: string): Promise<Prefab | null> {
-    return new Promise((resolve) => {
-      resources.load(key, Prefab, (error, asset) => {
-        if (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          const isMissingPrefab = message.includes(`doesn't contain ${key}`);
-          if (!isMissingPrefab) {
-            console.warn('[GameScene] Failed to load prefab, using fallback node.', key, error);
-          }
-          resolve(null);
-          return;
-        }
-
-        resolve(asset);
-      });
-    });
   }
 }

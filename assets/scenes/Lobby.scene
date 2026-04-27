@@ -280,7 +280,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 375,
+      "x": 375.00000000000006,
       "y": 667,
       "z": 0
     },
@@ -410,7 +410,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 750,
+      "width": 750.0000000000001,
       "height": 1334
     },
     "_anchorPoint": {
@@ -476,7 +476,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_id": "77Sgmu77JMmqdwXyXy9m7t"
+    "_id": "2f/bfEidRNub1XF2ou4u8w"
   },
   {
     "__type__": "cc.SceneGlobals",

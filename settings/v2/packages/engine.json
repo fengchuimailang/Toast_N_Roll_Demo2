@@ -171,7 +171,7 @@
             "_value": true
           },
           "procedural-animation": {
-            "_value": false
+            "_value": true
           },
           "custom-pipeline-post-process": {
             "_value": false
@@ -215,6 +215,7 @@
           "physics-2d-box2d-wasm",
           "physics-physx",
           "primitive",
+          "procedural-animation",
           "profiler",
           "rich-text",
           "skeletal-animation",

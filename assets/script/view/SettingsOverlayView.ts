@@ -1,17 +1,18 @@
 import {
   _decorator,
   Color,
-  Component,
   EventTouch,
   Graphics,
   Label,
   Layers,
   Node,
+  Prefab,
   UITransform,
   Vec3,
 } from 'cc';
 
 import type { AppSettings } from '../infra/SettingsStore';
+import { DialogController } from '../lbspace/DialogController';
 
 const { ccclass } = _decorator;
 
@@ -40,7 +41,7 @@ const PANEL_WIDTH = 480;
 const PANEL_HEIGHT = 540;
 
 @ccclass('SettingsOverlayView')
-export class SettingsOverlayView extends Component {
+export class SettingsOverlayView extends DialogController {
   private mode: SettingsOverlayMode = 'settings';
   private callbacks: SettingsOverlayBindings | null = null;
   private settings: AppSettings = {
@@ -57,16 +58,20 @@ export class SettingsOverlayView extends Component {
   private secondaryLabel: Label | null = null;
   private tertiaryLabel: Label | null = null;
   private closeButton: Node | null = null;
+  private backdropNode: Node | null = null;
+  private panelNode: Node | null = null;
   private isBusy = false;
+
+  protected static _getPrefab(): Prefab | null {
+    return null;
+  }
 
   protected onLoad(): void {
     this.ensureScaffold();
-    this.node.active = false;
   }
 
   public bind(callbacks: SettingsOverlayBindings): void {
     this.callbacks = callbacks;
-    this.ensureScaffold();
   }
 
   public open(mode: SettingsOverlayMode, settings: AppSettings): void {
@@ -75,12 +80,16 @@ export class SettingsOverlayView extends Component {
     this.isBusy = false;
     this.ensureScaffold();
     this.refresh();
-    this.node.active = true;
+    super.open();
+  }
+
+  protected _open(): void {
+    // 由父类处理动画，子类只需要更新内容
   }
 
   public close(): void {
-    this.node.active = false;
     this.callbacks?.onClose();
+    super.close();
   }
 
   private ensureScaffold(): void {
@@ -102,27 +111,29 @@ export class SettingsOverlayView extends Component {
     const transform = this.node.getComponent(UITransform) ?? this.node.addComponent(UITransform);
     transform.setContentSize(OVERLAY_WIDTH, OVERLAY_HEIGHT);
 
-    const backdrop = this.createGraphicsNode(this.node, 'SettingsBackdrop', Vec3.ZERO, OVERLAY_WIDTH, OVERLAY_HEIGHT);
-    const backdropGraphics = backdrop.getComponent(Graphics) ?? backdrop.addComponent(Graphics);
+    this.backdropNode = this.createGraphicsNode(this.node, 'SettingsBackdrop', Vec3.ZERO, OVERLAY_WIDTH, OVERLAY_HEIGHT);
+    const backdropGraphics = this.backdropNode.getComponent(Graphics) ?? this.backdropNode.addComponent(Graphics);
     backdropGraphics.fillColor = new Color(0, 0, 0, 142);
     backdropGraphics.rect(-OVERLAY_WIDTH / 2, -OVERLAY_HEIGHT / 2, OVERLAY_WIDTH, OVERLAY_HEIGHT);
     backdropGraphics.fill();
-    this.consumeTouches(backdrop);
+    this.consumeTouches(this.backdropNode);
+    this.mask = this.backdropNode;
 
-    const panelNode = this.createGraphicsNode(this.node, 'SettingsPanel', Vec3.ZERO, PANEL_WIDTH, PANEL_HEIGHT);
-    const panelGraphics = panelNode.getComponent(Graphics) ?? panelNode.addComponent(Graphics);
+    this.panelNode = this.createGraphicsNode(this.node, 'SettingsPanel', Vec3.ZERO, PANEL_WIDTH, PANEL_HEIGHT);
+    const panelGraphics = this.panelNode.getComponent(Graphics) ?? this.panelNode.addComponent(Graphics);
     panelGraphics.fillColor = new Color(255, 248, 231, 255);
     panelGraphics.roundRect(-PANEL_WIDTH / 2, -PANEL_HEIGHT / 2, PANEL_WIDTH, PANEL_HEIGHT, 34);
     panelGraphics.fill();
     panelGraphics.fillColor = new Color(237, 205, 157, 255);
     panelGraphics.roundRect(-PANEL_WIDTH / 2 + 12, -PANEL_HEIGHT / 2 + 12, PANEL_WIDTH - 24, PANEL_HEIGHT - 24, 28);
     panelGraphics.fill();
-    this.consumeTouches(panelNode);
+    this.consumeTouches(this.panelNode);
+    this.content = this.panelNode;
 
-    this.titleLabel = this.createLabel(panelNode, 'SettingsTitle', new Vec3(0, 208, 0), 34, 40, 280, 48);
+    this.titleLabel = this.createLabel(this.panelNode!, 'SettingsTitle', new Vec3(0, 208, 0), 34, 40, 280, 48);
     this.titleLabel.color = new Color(97, 62, 38, 255);
 
-    this.closeButton = this.createButton(panelNode, 'SettingsCloseButton', new Vec3(180, 208, 0), 52, 52, new Color(189, 128, 59, 255));
+    this.closeButton = this.createButton(this.panelNode!, 'SettingsCloseButton', new Vec3(180, 208, 0), 52, 52, new Color(189, 128, 59, 255));
     this.closeButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       if (this.mode === 'settings') {
@@ -133,11 +144,11 @@ export class SettingsOverlayView extends Component {
     closeLabel.string = '×';
     closeLabel.color = Color.WHITE;
 
-    this.createToggleRow(panelNode, '背景音乐', 'musicEnabled', new Vec3(0, 108, 0));
-    this.createToggleRow(panelNode, '游戏音效', 'sfxEnabled', new Vec3(0, 28, 0));
-    this.createToggleRow(panelNode, '手机震动', 'vibrationEnabled', new Vec3(0, -52, 0));
+    this.createToggleRow(this.panelNode!, '背景音乐', 'musicEnabled', new Vec3(0, 108, 0));
+    this.createToggleRow(this.panelNode!, '游戏音效', 'sfxEnabled', new Vec3(0, 28, 0));
+    this.createToggleRow(this.panelNode!, '手机震动', 'vibrationEnabled', new Vec3(0, -52, 0));
 
-    this.primaryButton = this.createButton(panelNode, 'SettingsPrimaryButton', new Vec3(0, -196, 0), 236, 64, new Color(220, 151, 72, 255));
+    this.primaryButton = this.createButton(this.panelNode!, 'SettingsPrimaryButton', new Vec3(0, -196, 0), 236, 64, new Color(220, 151, 72, 255));
     this.primaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handlePrimaryAction();
@@ -145,7 +156,7 @@ export class SettingsOverlayView extends Component {
     this.primaryLabel = this.createLabel(this.primaryButton, 'SettingsPrimaryLabel', Vec3.ZERO, 24, 28, 220, 48);
     this.primaryLabel.color = Color.WHITE;
 
-    this.secondaryButton = this.createButton(panelNode, 'SettingsSecondaryButton', new Vec3(-92, -126, 0), 156, 54, new Color(189, 128, 59, 255));
+    this.secondaryButton = this.createButton(this.panelNode!, 'SettingsSecondaryButton', new Vec3(-92, -126, 0), 156, 54, new Color(189, 128, 59, 255));
     this.secondaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handleSecondaryAction();
@@ -153,7 +164,7 @@ export class SettingsOverlayView extends Component {
     this.secondaryLabel = this.createLabel(this.secondaryButton, 'SettingsSecondaryLabel', Vec3.ZERO, 20, 24, 140, 42);
     this.secondaryLabel.color = Color.WHITE;
 
-    this.tertiaryButton = this.createButton(panelNode, 'SettingsTertiaryButton', new Vec3(92, -126, 0), 156, 54, new Color(151, 104, 57, 255));
+    this.tertiaryButton = this.createButton(this.panelNode!, 'SettingsTertiaryButton', new Vec3(92, -126, 0), 156, 54, new Color(151, 104, 57, 255));
     this.tertiaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handleTertiaryAction();
@@ -183,14 +194,14 @@ export class SettingsOverlayView extends Component {
       this.primaryLabel.string = '继续游戏';
       this.secondaryLabel.string = '退出大厅';
       this.tertiaryLabel.string = '重新开始';
-      this.secondaryButton.active = true;
-      this.tertiaryButton.active = true;
+      this.secondaryButton!.active = true;
+      this.tertiaryButton!.active = true;
     } else {
       this.primaryLabel.string = '确定';
       this.secondaryLabel.string = '';
       this.tertiaryLabel.string = '';
-      this.secondaryButton.active = false;
-      this.tertiaryButton.active = false;
+      this.secondaryButton!.active = false;
+      this.tertiaryButton!.active = false;
     }
 
     this.toggles.forEach((toggle) => {

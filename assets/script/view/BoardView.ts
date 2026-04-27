@@ -8,7 +8,6 @@ import {
   Node,
   Prefab,
   instantiate,
-  resources,
   Tween,
   tween,
   UITransform,
@@ -25,6 +24,7 @@ import {
   type SessionStateSnapshot,
   type SessionSwapTimeline,
 } from '../game/session/GameSession';
+import { PrefabLoader } from '../lbspace/PrefabLoader';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
 import { CellView } from './CellView';
 
@@ -105,9 +105,9 @@ export class BoardView extends Component {
     }
 
     this.cellPrefabRequested = true;
-    resources.load('prefabs/Cell', Prefab, (error, asset) => {
-      if (error) {
-        console.warn('[BoardView] Failed to load Cell prefab, falling back to dynamic node creation.', error);
+    PrefabLoader.loadWithCallback('prefabs/Cell', (asset) => {
+      if (!asset) {
+        console.warn('[BoardView] Failed to load Cell prefab, falling back to dynamic node creation.');
         return;
       }
 
