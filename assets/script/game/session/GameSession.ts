@@ -162,7 +162,7 @@ export class GameSession {
     const currentLevelId = this.levelConfig?.levelId ?? this.requestedLevelId;
     const totalLevels = await this.getTotalLevels();
     if (currentLevelId >= totalLevels) {
-      this.emitNotice('当前已经是最后一关');
+      this.emitNotice('当前已经是最后一关', 2000);
       return false;
     }
 
@@ -185,7 +185,7 @@ export class GameSession {
 
   async loadLevel(levelId: number): Promise<boolean> {
     if (!this.levelProgressStore.isLevelUnlocked(levelId)) {
-      this.emitNotice(`关卡 ${levelId} 尚未解锁`);
+      this.emitNotice(`关卡 ${levelId} 尚未解锁`, 2000);
       return false;
     }
 
@@ -197,7 +197,7 @@ export class GameSession {
       }
 
       this.levelProgressStore.setCurrentLevel(levelId);
-      this.emitNotice(`已切换到关卡 ${levelId}`);
+      this.emitNotice(`已切换到关卡 ${levelId}`, 2000);
       return true;
     } catch (error) {
       console.warn('[GameSession] Failed to load level', levelId, error);
@@ -299,7 +299,7 @@ export class GameSession {
     }
 
     if (!this.isAdjacent(from, to)) {
-      this.emitNotice('只能交换相邻食材');
+      this.emitNotice('只能交换相邻食材', 2000);
       this.emit({
         type: 'invalidSwap',
         snapshot: this.getSnapshot(),
@@ -317,7 +317,7 @@ export class GameSession {
     if (opening.matches.length === 0) {
       this.board.swapIngredients(from, to);
       this.matchDetector.clearLastSwap();
-      this.emitNotice('这样交换不会形成三连');
+      this.emitNotice('这样交换不会形成三连', 2000);
       this.emit({
         type: 'invalidSwap',
         snapshot: this.getSnapshot(),
@@ -359,7 +359,7 @@ export class GameSession {
     this.toolMode = this.toolMode === 'remove' ? null : 'remove';
     this.toolSelection = null;
     this.syncState();
-    this.emitNotice(this.toolMode === 'remove' ? '去除模式：点击一个食材立即移除' : '已取消去除模式');
+    this.emitNotice(this.toolMode === 'remove' ? '去除模式：点击一个食材立即移除' : '已取消去除模式', 2000);
 
     if (this.toolMode === 'remove' && !wasActive) {
       MsgMgr.emit(GameMsg.ToolActivated, 'remove');
@@ -376,7 +376,7 @@ export class GameSession {
     this.toolMode = this.toolMode === 'magnet' ? null : 'magnet';
     this.toolSelection = null;
     this.syncState();
-    this.emitNotice(this.toolMode === 'magnet' ? '磁力模式：先选一个食材，再选同阶食材' : '已取消磁力模式');
+    this.emitNotice(this.toolMode === 'magnet' ? '磁力模式：先选一个食材，再选同阶食材' : '已取消磁力模式', 2000);
 
     if (this.toolMode === 'magnet' && !wasActive) {
       MsgMgr.emit(GameMsg.ToolActivated, 'magnet');
@@ -393,14 +393,14 @@ export class GameSession {
     this.toolSelection = null;
     const shuffled = this.reshuffleBoardUntilPlayable();
     if (!shuffled) {
-      this.emitNotice('当前无法生成新的可玩盘面');
+      this.emitNotice('当前无法生成新的可玩盘面', 2000);
       return false;
     }
 
     this.phase = 'playing';
     this.checkGameState();
     this.syncState();
-    this.emitNotice('已重新洗牌');
+    this.emitNotice('已重新洗牌', 2000);
 
     MsgMgr.emit(GameMsg.ToolUsed, 'shuffle');
     return true;
@@ -413,7 +413,7 @@ export class GameSession {
 
     const cell = this.board.getCell(position.row, position.col);
     if (!cell?.ingredient) {
-      this.emitNotice('这里没有可移除的食材');
+      this.emitNotice('这里没有可移除的食材', 2000);
       return false;
     }
 
@@ -425,7 +425,7 @@ export class GameSession {
     this.toolSelection = null;
     this.checkGameState();
     this.syncState();
-    this.emitNotice('已去除一个食材');
+    this.emitNotice('已去除一个食材', 2000);
 
     MsgMgr.emit(GameMsg.ToolUsed, 'remove');
     return true;
@@ -439,21 +439,21 @@ export class GameSession {
     const cell = this.board.getCell(position.row, position.col);
     const ingredient = cell?.ingredient;
     if (!ingredient) {
-      this.emitNotice('请点击一个有效食材');
+      this.emitNotice('请点击一个有效食材', 2000);
       return false;
     }
 
     if (!this.toolSelection) {
       this.toolSelection = { ...position };
       this.syncState();
-      this.emitNotice('已选择第一个食材，请再选一个同阶食材');
+      this.emitNotice('已选择第一个食材，请再选一个同阶食材', 2000);
       return true;
     }
 
     if (this.toolSelection.row === position.row && this.toolSelection.col === position.col) {
       this.toolSelection = null;
       this.syncState();
-      this.emitNotice('已取消当前磁力选择');
+      this.emitNotice('已取消当前磁力选择', 2000);
       return true;
     }
 
@@ -463,7 +463,7 @@ export class GameSession {
     if (!sourceIngredient || sourceIngredient.tier !== ingredient.tier) {
       this.toolSelection = null;
       this.syncState();
-      this.emitNotice('磁力合成要求两个同阶食材');
+      this.emitNotice('磁力合成要求两个同阶食材', 2000);
       return false;
     }
 
@@ -471,7 +471,7 @@ export class GameSession {
     if (!advancedIngredient) {
       this.toolSelection = null;
       this.syncState();
-      this.emitNotice('该食材已经无法继续升级');
+      this.emitNotice('该食材已经无法继续升级', 2000);
       return false;
     }
 
@@ -486,7 +486,7 @@ export class GameSession {
     this.toolSelection = null;
     this.checkGameState();
     this.syncState();
-    this.emitNotice('磁力合成完成');
+    this.emitNotice('磁力合成完成', 2000);
 
     MsgMgr.emit(GameMsg.ToolUsed, 'magnet');
     return true;
@@ -500,7 +500,7 @@ export class GameSession {
     this.toolMode = null;
     this.toolSelection = null;
     this.syncState();
-    this.emitNotice('已取消当前道具模式');
+    this.emitNotice('已取消当前道具模式', 2000);
   }
 
   syncState(): void {
