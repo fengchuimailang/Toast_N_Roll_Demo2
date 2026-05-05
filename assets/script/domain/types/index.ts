@@ -11,11 +11,31 @@ export type IngredientType =
     | 'wheat'    // 1阶: 小麦
     | 'flour'    // 2阶: 面粉
     | 'dough'    // 3阶: 面团
-    | 'baking'   // 4阶: 面包坯
-    | 'toast'    // 5阶: 吐司面包
-    | 'gift';    // 6阶: 吐司礼盒
+    | 'bread'    // 4阶: 面包
+    | 'toast'    // 5阶: 吐司
+    | 'gift';    // 6阶: 礼盒
 
-export type FlavorType = 'original' | 'matcha' | 'strawberry';
+export type FlavorType = 
+    | 'original'           // 原味
+    | 'strawberry'         // 草莓
+    | 'matcha'             // 抹茶
+    | 'mango'              // 芒果
+    | 'sea_buckthorn_berry' // 沙棘
+    | 'ice_cream'          // 冰淇淋
+    | 'spicy'              // 辣椒
+    | 'passion_fruit';     // 百香果
+
+// 口味显示名称映射
+export const FLAVOR_NAMES: Record<FlavorType, string> = {
+    original: '原味',
+    strawberry: '草莓',
+    matcha: '抹茶',
+    mango: '芒果',
+    sea_buckthorn_berry: '沙棘',
+    ice_cream: '冰淇淋',
+    spicy: '辣椒',
+    passion_fruit: '百香果',
+};
 
 export interface Ingredient {
     id: string;
@@ -226,50 +246,95 @@ export const SPAWN_RATES: Record<IngredientType, number> = {
     wheat: 0.50,
     flour: 0.30,
     dough: 0.15,
-    baking: 0.05,
+    bread: 0.05,
     toast: 0,
     gift: 0,
 };
 
 export const GIFT_VALUES: Record<FlavorType, number> = {
     original: 100,
-    matcha: 120,
-    strawberry: 150,
+    strawberry: 120,
+    matcha: 130,
+    mango: 140,
+    sea_buckthorn_berry: 150,
+    ice_cream: 160,
+    spicy: 180,
+    passion_fruit: 200,
 };
 
 export const INGREDIENT_IMAGES: Record<IngredientType, string> = {
-    wheat: '/assets/ingredients/block_wheat_original.png',
-    flour: '/assets/ingredients/block_flour_original.png',
-    dough: '/assets/ingredients/block_dough_original.png',
-    baking: '/assets/ingredients/block_bread_original.png',
-    toast: '/assets/ingredients/block_toast_original.png',
-    gift: '/assets/ingredients/block_gift_original.png',
+    wheat: '/assets/ingredients_new/wheat.png',
+    flour: '/assets/ingredients_new/flour.png',
+    dough: '/assets/ingredients_new/dough.png',
+    bread: '/assets/ingredients_new/bread.png',
+    toast: '/assets/ingredients_new/toast.png',
+    gift: '/assets/ingredients_new/gift_origin.png',
 };
 
 export const INGREDIENT_IMAGES_BY_FLAVOR: Record<FlavorType, Record<IngredientType, string>> = {
     original: {
-        wheat: '/assets/ingredients/block_wheat_original.png',
-        flour: '/assets/ingredients/block_flour_original.png',
-        dough: '/assets/ingredients/block_dough_original.png',
-        baking: '/assets/ingredients/block_bread_original.png',
-        toast: '/assets/ingredients/block_toast_original.png',
-        gift: '/assets/ingredients/block_gift_original.png',
-    },
-    matcha: {
-        wheat: '/assets/ingredients/block_wheat_matcha.png',
-        flour: '/assets/ingredients/block_flour_matcha.png',
-        dough: '/assets/ingredients/block_dough_matcha.png',
-        baking: '/assets/ingredients/block_bread_matcha.png',
-        toast: '/assets/ingredients/block_toast_matcha.png',
-        gift: '/assets/ingredients/block_gift_matcha.png',
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_origin.png',
     },
     strawberry: {
-        wheat: '/assets/ingredients/block_wheat_strawberry.png',
-        flour: '/assets/ingredients/block_flour_strawberry.png',
-        dough: '/assets/ingredients/block_dough_strawberry.png',
-        baking: '/assets/ingredients/block_bread_strawberry.png',
-        toast: '/assets/ingredients/block_toast_strawberry.png',
-        gift: '/assets/ingredients/block_gift_strawberry.png',
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_strawberry.png',
+    },
+    matcha: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_matcha.png',
+    },
+    mango: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_mango.png',
+    },
+    sea_buckthorn_berry: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_seaberry.png',
+    },
+    ice_cream: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_icecream.png',
+    },
+    spicy: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_spicy.png',
+    },
+    passion_fruit: {
+        wheat: '/assets/ingredients_new/wheat.png',
+        flour: '/assets/ingredients_new/flour.png',
+        dough: '/assets/ingredients_new/dough.png',
+        bread: '/assets/ingredients_new/bread.png',
+        toast: '/assets/ingredients_new/toast.png',
+        gift: '/assets/ingredients_new/gift_passionfruit.png',
     },
 };
 
@@ -277,21 +342,29 @@ export const INGREDIENT_NAMES: Record<IngredientType, string> = {
     wheat: '小麦',
     flour: '面粉',
     dough: '面团',
-    baking: '面包坯',
-    toast: '吐司面包',
-    gift: '吐司礼盒',
+    bread: '面包',
+    toast: '吐司',
+    gift: '礼盒',
 };
 
 export const FLAVOR_COLORS: Record<FlavorType, string> = {
     original: '#FFD700',
-    matcha: '#90EE90',
     strawberry: '#FFB6C1',
+    matcha: '#90EE90',
+    mango: '#FFA500',
+    sea_buckthorn_berry: '#FF8C00',
+    ice_cream: '#FFF0F5',
+    spicy: '#FF4500',
+    passion_fruit: '#9932CC',
 };
 
 // ========== 工具函数 ==========
 
+let _idCounter = 0;
+
 export function generateId(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    _idCounter++;
+    return `${Date.now()}-${_idCounter}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
 // ========== 随机工具函数 ==========
@@ -313,7 +386,10 @@ export function randomIngredientType(): IngredientType {
 }
 
 export function randomFlavor(): FlavorType {
-    const flavors: FlavorType[] = ['original', 'matcha', 'strawberry'];
+    const flavors: FlavorType[] = [
+        'original', 'strawberry', 'matcha', 'mango', 
+        'sea_buckthorn_berry', 'ice_cream', 'spicy', 'passion_fruit'
+    ];
     return randomPick(flavors);
 }
 

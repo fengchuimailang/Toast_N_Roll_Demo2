@@ -14,6 +14,7 @@ import {
 
 import type { SessionHomeSummary } from '../game/session/GameSession';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
+import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -343,7 +344,16 @@ export class HomeOverlayView extends Component {
     this.currentLevelNameLabel = this.createLabel(this.node, 'HomeCurrentLevelName', new Vec3(0, -522, 0), 22, 26, 420, 30);
     this.currentLevelNameLabel.color = new Color(108, 74, 47, 255);
 
-    this.startButtonNode = this.createButton(this.node, 'HomeStartButton', new Vec3(0, -618, 0), new Color(255, 191, 67, 255), 330, 92, 28);
+    this.startButtonNode = create9SliceButtonAsync(
+      this.node,
+      'HomeStartButton',
+      { x: 0, y: -618 },
+      330,
+      92,
+      new Color(255, 191, 67, 255),
+      '',
+      new Color(109, 68, 32, 255)
+    );
     this.startButtonNode.on(Node.EventType.TOUCH_END, this.handleStartTap, this);
     this.startButtonLabel = this.createLabel(this.startButtonNode, 'HomeStartLabel', Vec3.ZERO, 30, 36, 300, 84);
     this.startButtonLabel.color = new Color(109, 68, 32, 255);

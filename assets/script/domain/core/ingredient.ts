@@ -8,6 +8,7 @@ import {
   randomIngredientType,
   randomFlavor,
   generateId,
+  GIFT_VALUES,
 } from '../types';
 import { flavorManager } from './flavor-manager';
 
@@ -17,8 +18,8 @@ import { flavorManager } from './flavor-manager';
 const INGREDIENT_ADVANCEMENT: Record<IngredientType, IngredientType | null> = {
   wheat: 'flour',
   flour: 'dough',
-  dough: 'baking',
-  baking: 'toast',
+  dough: 'bread',
+  bread: 'toast',
   toast: 'gift',
   gift: null,
 };
@@ -31,7 +32,7 @@ export function getIngredientTier(type: IngredientType): IngredientTier {
     wheat: 1,
     flour: 2,
     dough: 3,
-    baking: 4,
+    bread: 4,
     toast: 5,
     gift: 6,
   };
@@ -100,12 +101,7 @@ export function isGiftBox(ingredient: Ingredient): boolean {
  * 获取礼盒价值
  */
 export function getGiftValue(flavor: FlavorType): number {
-  const values: Record<FlavorType, number> = {
-    original: 100,
-    matcha: 120,
-    strawberry: 150,
-  };
-  return values[flavor];
+  return GIFT_VALUES[flavor];
 }
 
 /**

@@ -9,7 +9,7 @@ import { createIngredient } from './ingredient';
 // 注意：Board类使用自己的isValidPosition方法，支持动态网格大小
 
 // 食材类型映射（按 tier）
-const TIER_TO_TYPE: IngredientType[] = ['wheat', 'flour', 'dough', 'baking', 'toast', 'gift'];
+const TIER_TO_TYPE: IngredientType[] = ['wheat', 'flour', 'dough', 'bread', 'toast', 'gift'];
 
 export class GameBoard {
   private grid: Cell[][] = [];
@@ -592,7 +592,7 @@ export class GameBoard {
    */
   private createIngredientExcludingTypes(excludeTypes: string[], useRefillConfig: boolean): Ingredient {
     // 获取所有可用类型
-    const allTypes: IngredientType[] = ['wheat', 'flour', 'dough', 'baking', 'toast', 'gift'];
+    const allTypes: IngredientType[] = ['wheat', 'flour', 'dough', 'bread', 'toast', 'gift'];
     const availableTypes = allTypes.filter(t => !excludeTypes.includes(t));
 
     // 如果没有可用类型（理论上不会发生，但做兜底）

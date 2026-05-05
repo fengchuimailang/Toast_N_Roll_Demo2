@@ -100,10 +100,10 @@ export class TopController extends Controller {
 
         if (this.content) {
             TweenUtils.fadeOut(this.content, () => {
-                this.node.destroy();
+                this.node.active = false;
             }, 0.2);
         } else {
-            this.node.destroy();
+            this.node.active = false;
         }
     }
 

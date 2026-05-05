@@ -269,7 +269,66 @@ scripts/validate-cocos-json.sh <asset.json>
 ### 进行中
 - Prefab 化推进
 - 视觉美化
+- Cell 逻辑重构（Tray 合并 + 口味徽章）
 
 ---
 
-*最后更新: 2026-04-22*
+## 🔍 日志分析指南
+
+### 日志位置
+
+| 环境 | 日志路径 | 说明 |
+|------|----------|------|
+| Windows 编辑器 | `temp/logs/project.log` | Cocos Creator 编辑器运行日志 |
+| Windows 预览 | `temp/logs/project.log` | 预览时产生的日志 |
+| 构建日志 | `temp/logs/build.log` | 构建时的日志 |
+
+### WSL2 环境下查看 Windows 日志
+
+由于项目在 WSL2 中访问 Windows 文件系统，日志路径映射为：
+```bash
+# Windows 路径: D:\project\Toast_N_Roll_Demo2\temp\logs\project.log
+# WSL2 路径: /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log
+```
+
+### 常用日志分析命令
+
+```bash
+# 查看最新日志（最后 100 行）
+tail -100 /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log
+
+# 查看错误日志
+grep -i "error" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log | tail -50
+
+# 查看特定模块日志
+grep "\[Assets\]" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log | tail -20
+grep "\[Scene\]" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log | tail -20
+grep "\[PreviewInEditor\]" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log | tail -20
+
+# 查看 TypeScript 编译错误
+grep "TS[0-9]" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log | tail -30
+
+# 统计错误数量
+grep -c "error:" /mnt/d/project/Toast_N_Roll_Demo2/temp/logs/project.log
+```
+
+### 常见错误类型
+
+| 错误模式 | 原因 | 解决方案 |
+|----------|------|----------|
+| `Input Buffer is empty` | PNG 文件为空或损坏 | 删除空文件，重新从 Figma 下载 |
+| `Importer exec failed` | 资源导入失败 | 检查文件格式和完整性 |
+| `TS2xxx` | TypeScript 编译错误 | 修复类型定义或代码 |
+| `Cannot find module` | 模块路径错误 | 检查 import 路径 |
+| `Prefab not found` | Prefab 路径错误 | 检查 resources 目录 |
+
+### 日志级别
+
+- `log`: 普通信息
+- `info`: 重要信息（如预览初始化）
+- `error`: 错误（需要修复）
+- `warn`: 警告（可选修复）
+
+---
+
+*最后更新: 2026-05-01*

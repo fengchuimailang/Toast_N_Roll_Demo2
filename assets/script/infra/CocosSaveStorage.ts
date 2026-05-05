@@ -121,23 +121,24 @@ export function loadCocosSave(): CocosSaveData {
 
 export function saveCocosSave(patch: SavePatch): void {
   try {
+    const current = loadCocosSave();
     const nextSave = normalizeSave({
-      ...loadCocosSave(),
+      ...current,
       ...patch,
       progress: {
-        ...loadCocosSave().progress,
+        ...current.progress,
         ...patch.progress,
       },
       inventory: {
-        ...loadCocosSave().inventory,
+        ...current.inventory,
         ...patch.inventory,
         unlockStatus: {
-          ...loadCocosSave().inventory.unlockStatus,
+          ...current.inventory.unlockStatus,
           ...patch.inventory?.unlockStatus,
         },
       },
       settings: {
-        ...loadCocosSave().settings,
+        ...current.settings,
         ...patch.settings,
       },
     });

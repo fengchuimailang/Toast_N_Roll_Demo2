@@ -49,12 +49,22 @@ const FLAVOR_LABELS: Record<FlavorKey, string> = {
   original: '原味',
   matcha: '抹茶',
   strawberry: '草莓',
+  mango: '芒果',
+  sea_buckthorn_berry: '沙棘',
+  ice_cream: '冰淇淋',
+  spicy: '辣椒',
+  passion_fruit: '百香果',
 };
 
 const FLAVOR_COLORS: Record<FlavorKey, Color> = {
   original: new Color(196, 145, 94, 255),
   matcha: new Color(122, 161, 101, 255),
   strawberry: new Color(214, 120, 128, 255),
+  mango: new Color(255, 165, 0, 255),
+  sea_buckthorn_berry: new Color(255, 140, 0, 255),
+  ice_cream: new Color(255, 240, 245, 255),
+  spicy: new Color(255, 69, 0, 255),
+  passion_fruit: new Color(153, 50, 204, 255),
 };
 
 function imagePathToResourceKey(imagePath: string): string {
@@ -66,7 +76,7 @@ function imagePathToResourceKey(imagePath: string): string {
 }
 
 function getDemandSpriteKey(flavor: FlavorKey): string {
-  return `ingredients/block_toast_${flavor}`;
+  return `ingredients_new/toast`;
 }
 
 function getPatienceColor(percent: number, fallback: Color): Color {

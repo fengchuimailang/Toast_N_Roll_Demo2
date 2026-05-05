@@ -49,8 +49,8 @@
 interface Ingredient {
   id: string;           // 唯一标识
   tier: 1 | 2 | 3 | 4 | 5 | 6;  // 阶级
-  type: 'wheat' | 'flour' | 'dough' | 'baking' | 'toast' | 'gift';
-  flavor: 'original' | 'matcha' | 'strawberry';  // 口味
+  type: 'wheat' | 'flour' | 'dough' | 'bread' | 'toast' | 'gift';
+  flavor: 'original' | 'strawberry' | 'matcha' | 'mango' | 'sea_buckthorn_berry' | 'ice_cream' | 'spicy' | 'passion_fruit';  // 口味
   emoji: string;        // 显示图标
   name: string;         // 显示名称
 }
@@ -141,12 +141,12 @@ const GRID_PADDING = 20;     // 游戏区内边距
 双合成示例：
 ```
 交换前:
-第2行: [ baking ][ wheat ][ flour ][ wheat ][ dough ]
-第3行: [ toast  ][ flour ][ wheat ][ flour ][ baking ]
+第2行: [ bread ][ wheat ][ flour ][ wheat ][ dough ]
+第3行: [ toast  ][ flour ][ wheat ][ flour ][ bread ]
 
 交换后:
-第2行: [ baking ][ wheat ][ wheat ][ wheat ][ dough ]   → 3个1级，同时合成1个2级
-第3行: [ toast  ][ flour ][ flour ][ flour ][ baking ]  → 3个2级，同时合成1个3级
+第2行: [ bread ][ wheat ][ wheat ][ wheat ][ dough ]   → 3个1级，同时合成1个2级
+第3行: [ toast  ][ flour ][ flour ][ flour ][ bread ]  → 3个2级，同时合成1个3级
 ```
 
 ```
@@ -602,7 +602,7 @@ const SPAWN_RATES = {
   wheat: 0.50,      // 50% - 1阶
   flour: 0.30,      // 30% - 2阶
   dough: 0.15,      // 15% - 3阶
-  baking: 0.05,     // 5%  - 4阶
+  bread: 0.05,       // 5%  - 4阶
 };
 // 5阶和6阶不会直接生成，只能合成
 ```

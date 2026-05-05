@@ -19,6 +19,7 @@ import {
 import { DialogController } from '../lbspace/DialogController';
 import { GameMsg, MsgMgr } from '../lbspace/lbspace';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
+import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -160,12 +161,30 @@ export class SettlementOverlayView extends DialogController {
     this.detailLabel = this.createLabel('SettlementDetail', panelNode, new Vec3(0, -64, 0), 22, 28, PANEL_WIDTH - 120, 64);
     this.recordLabel = this.createLabel('SettlementRecord', panelNode, new Vec3(0, -124, 0), 16, 22, PANEL_WIDTH - 120, 52);
 
-    this.primaryButton = this.createButton(panelNode, 'SettlementPrimary', new Vec3(-118, -190, 0), new Color(220, 151, 72, 255));
+    this.primaryButton = create9SliceButtonAsync(
+      panelNode,
+      'SettlementPrimary',
+      { x: -118, y: -190 },
+      196,
+      68,
+      new Color(220, 151, 72, 255),
+      '重新开始',
+      Color.WHITE
+    );
     this.primaryButton.on(Node.EventType.TOUCH_END, this.handleRestartTap, this);
     this.primaryLabel = this.createLabel('SettlementPrimaryLabel', this.primaryButton, Vec3.ZERO, 24, 30, 180, 52);
     this.primaryLabel.string = '重新开始';
 
-    this.secondaryButton = this.createButton(panelNode, 'SettlementSecondary', new Vec3(118, -190, 0), new Color(189, 128, 59, 255));
+    this.secondaryButton = create9SliceButtonAsync(
+      panelNode,
+      'SettlementSecondary',
+      { x: 118, y: -190 },
+      196,
+      68,
+      new Color(189, 128, 59, 255),
+      '下一关',
+      Color.WHITE
+    );
     this.secondaryButton.on(Node.EventType.TOUCH_END, this.handleNextLevelTap, this);
     this.secondaryLabel = this.createLabel('SettlementSecondaryLabel', this.secondaryButton, Vec3.ZERO, 24, 30, 180, 52);
     this.secondaryLabel.string = '下一关';

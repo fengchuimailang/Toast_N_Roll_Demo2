@@ -13,6 +13,7 @@ import {
 
 import type { AppSettings } from '../infra/SettingsStore';
 import { DialogController } from '../lbspace/DialogController';
+import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -148,7 +149,16 @@ export class SettingsOverlayView extends DialogController {
     this.createToggleRow(this.panelNode!, '游戏音效', 'sfxEnabled', new Vec3(0, 28, 0));
     this.createToggleRow(this.panelNode!, '手机震动', 'vibrationEnabled', new Vec3(0, -52, 0));
 
-    this.primaryButton = this.createButton(this.panelNode!, 'SettingsPrimaryButton', new Vec3(0, -196, 0), 236, 64, new Color(220, 151, 72, 255));
+    this.primaryButton = create9SliceButtonAsync(
+      this.panelNode!,
+      'SettingsPrimaryButton',
+      { x: 0, y: -196 },
+      236,
+      64,
+      new Color(220, 151, 72, 255),
+      '',
+      Color.WHITE
+    );
     this.primaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handlePrimaryAction();
@@ -156,7 +166,16 @@ export class SettingsOverlayView extends DialogController {
     this.primaryLabel = this.createLabel(this.primaryButton, 'SettingsPrimaryLabel', Vec3.ZERO, 24, 28, 220, 48);
     this.primaryLabel.color = Color.WHITE;
 
-    this.secondaryButton = this.createButton(this.panelNode!, 'SettingsSecondaryButton', new Vec3(-92, -126, 0), 156, 54, new Color(189, 128, 59, 255));
+    this.secondaryButton = create9SliceButtonAsync(
+      this.panelNode!,
+      'SettingsSecondaryButton',
+      { x: -92, y: -126 },
+      156,
+      54,
+      new Color(189, 128, 59, 255),
+      '',
+      Color.WHITE
+    );
     this.secondaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handleSecondaryAction();
@@ -164,7 +183,16 @@ export class SettingsOverlayView extends DialogController {
     this.secondaryLabel = this.createLabel(this.secondaryButton, 'SettingsSecondaryLabel', Vec3.ZERO, 20, 24, 140, 42);
     this.secondaryLabel.color = Color.WHITE;
 
-    this.tertiaryButton = this.createButton(this.panelNode!, 'SettingsTertiaryButton', new Vec3(92, -126, 0), 156, 54, new Color(151, 104, 57, 255));
+    this.tertiaryButton = create9SliceButtonAsync(
+      this.panelNode!,
+      'SettingsTertiaryButton',
+      { x: 92, y: -126 },
+      156,
+      54,
+      new Color(151, 104, 57, 255),
+      '',
+      Color.WHITE
+    );
     this.tertiaryButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.handleTertiaryAction();

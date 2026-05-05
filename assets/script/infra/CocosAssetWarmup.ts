@@ -34,9 +34,11 @@ const CRITICAL_SPRITE_KEYS = [
   'tool/tool_remove_badge',
   'tool/tool_shuffle_badge',
   'tool/tool_attract_badge',
-  'ingredients/block_toast_original',
-  'ingredients/block_toast_matcha',
-  'ingredients/block_toast_strawberry',
+  'ingredients_new/toast',
+  'ingredients_new/wheat',
+  'ingredients_new/flour',
+  'ingredients_new/dough',
+  'ingredients_new/bread',
 ] as const;
 
 function preloadPrefab(key: string): Promise<void> {

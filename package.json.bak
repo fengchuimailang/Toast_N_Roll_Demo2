@@ -1,0 +1,10 @@
+{
+    "name": "new_project",
+    "type": "2d",
+    "version": "3.8.8",
+    "uuid": "2614b04d-eb84-4a0a-b974-15e5c71de2d2",
+    "creator": {
+        "version": "3.8.8",
+        "dependencies": {}
+    }
+}

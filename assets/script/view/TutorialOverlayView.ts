@@ -13,6 +13,8 @@ import {
   Vec3,
 } from 'cc';
 
+import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
+
 const { ccclass } = _decorator;
 
 interface TutorialStep {
@@ -274,7 +276,16 @@ export class TutorialOverlayView extends Component {
     const gridTransform = this.gridRoot.addComponent(UITransform);
     gridTransform.setContentSize(420, 420);
 
-    this.skipButton = this.createButton(this.node, 'TutorialSkipButton', new Vec3(272, 606, 0), 132, 48, new Color(139, 69, 19, 224));
+    this.skipButton = create9SliceButtonAsync(
+      this.node,
+      'TutorialSkipButton',
+      { x: 272, y: 606 },
+      132,
+      48,
+      new Color(139, 69, 19, 224),
+      '跳过教学',
+      Color.WHITE
+    );
     this.skipButton.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
       event.propagationStopped = true;
       void this.skip();

@@ -27,6 +27,8 @@ import {
 import { PrefabLoader } from '../lbspace/PrefabLoader';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
 import { CellView } from './CellView';
+import { trayManager, type TrayInfo } from '../domain/core/tray-manager';
+import { flavorManager } from '../domain/core/flavor-manager';
 
 const { ccclass } = _decorator;
 
@@ -250,6 +252,9 @@ export class BoardView extends Component {
     const activeIds = new Set<string>();
     const tweenJobs: Promise<void>[] = [];
 
+    // 计算 Tray 映射
+    const trayMap = trayManager.calculateTrayMap(snapshot.cells);
+
     for (const row of snapshot.cells) {
       for (const cell of row) {
         const ingredient = cell.ingredient;
@@ -274,6 +279,24 @@ export class BoardView extends Component {
         cellView.configure(this.lastCellSize - 18);
         cellView.setSelected(areSamePosition(this.selectedCell, cell.position));
         this.applyIngredientSprite(cellView, ingredient.image);
+        
+        // 应用口味徽章（非原味显示徽章）
+        const badgePath = flavorManager.getFlavorBadgeImage(ingredient.flavor);
+        cellView.setFlavorBadge(badgePath);
+        
+        // 应用 Tray 合并显示
+        const trayInfo = trayManager.getTrayInfo(trayMap, cell.position);
+        if (trayInfo && trayInfo.variant !== 'none') {
+          cellView.setTray(
+            trayInfo.variant,
+            ingredient.tier,
+            trayInfo.rotation,
+            trayInfo.isConnected,
+            trayInfo.isSameType
+          );
+        } else {
+          cellView.hideTray();
+        }
 
         if (!animate) {
           cellView.node.setPosition(targetPosition);
@@ -378,10 +401,7 @@ export class BoardView extends Component {
         return;
       }
 
-      const snapshot = this.currentSnapshot;
-      if (snapshot) {
-        this.applySnapshot(snapshot, false);
-      }
+      cellView.setSpriteFrame(frame);
     });
   }
 

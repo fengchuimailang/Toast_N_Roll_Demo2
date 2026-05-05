@@ -276,15 +276,15 @@ export class MatchDetector {
   }
 
   private wouldMatch(grid: Cell[][], pos1: GridPosition, pos2: GridPosition): boolean {
-    const temp = grid[pos1.row][pos1.col].ingredient;
-    grid[pos1.row][pos1.col].ingredient = grid[pos2.row][pos2.col].ingredient;
-    grid[pos2.row][pos2.col].ingredient = temp;
+    // Create a shallow copy of the grid to avoid mutating the original
+    const testGrid = grid.map(row => row.map(cell => ({ ...cell })));
+    
+    // Swap ingredients in the test grid
+    const temp = testGrid[pos1.row][pos1.col].ingredient;
+    testGrid[pos1.row][pos1.col].ingredient = testGrid[pos2.row][pos2.col].ingredient;
+    testGrid[pos2.row][pos2.col].ingredient = temp;
 
-    const matches = this.detectMatches(grid);
-
-    grid[pos2.row][pos2.col].ingredient = grid[pos1.row][pos1.col].ingredient;
-    grid[pos1.row][pos1.col].ingredient = temp;
-
+    const matches = this.detectMatches(testGrid);
     return matches.matches.length > 0;
   }
 }

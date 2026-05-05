@@ -34,7 +34,7 @@ export function weightedRandom<T>(items: { item: T; weight: number }[]): T {
  * 随机生成食材类型（根据生成概率）
  */
 export function randomIngredientType(): IngredientType {
-  const types: IngredientType[] = ['wheat', 'flour', 'dough', 'baking'];
+  const types: IngredientType[] = ['wheat', 'flour', 'dough', 'bread'];
   const weights = types.map(type => SPAWN_RATES[type]);
 
   const items = types.map((type, index) => ({

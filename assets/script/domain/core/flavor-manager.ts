@@ -9,28 +9,68 @@ import type { IngredientType, FlavorType } from '../types';
 // 默认口味配置（作为后备）
 const DEFAULT_FLAVOR_CONFIG: Record<FlavorType, Record<IngredientType, ChainItem>> = {
   original: {
-    wheat: { id: 'wheat_original', name: '小麦', image: '/assets/ingredients/block_wheat_original.png' },
-    flour: { id: 'flour_original', name: '面粉', image: '/assets/ingredients/block_flour_original.png' },
-    dough: { id: 'dough_original', name: '面团', image: '/assets/ingredients/block_dough_original.png' },
-    baking: { id: 'bread_original', name: '面包坯', image: '/assets/ingredients/block_bread_original.png' },
-    toast: { id: 'toast_original', name: '吐司', image: '/assets/ingredients/block_toast_original.png' },
-    gift: { id: 'gift_original', name: '原味礼盒', image: '/assets/ingredients/block_gift_original.png' },
-  },
-  matcha: {
-    wheat: { id: 'wheat_matcha', name: '抹茶小麦', image: '/assets/ingredients/block_wheat_matcha.png' },
-    flour: { id: 'flour_matcha', name: '抹茶面粉', image: '/assets/ingredients/block_flour_matcha.png' },
-    dough: { id: 'dough_matcha', name: '抹茶面团', image: '/assets/ingredients/block_dough_matcha.png' },
-    baking: { id: 'bread_matcha', name: '抹茶面包坯', image: '/assets/ingredients/block_bread_matcha.png' },
-    toast: { id: 'toast_matcha', name: '抹茶吐司', image: '/assets/ingredients/block_toast_matcha.png' },
-    gift: { id: 'gift_matcha', name: '抹茶礼盒', image: '/assets/ingredients/block_gift_matcha.png' },
+    wheat: { id: 'wheat_original', name: '小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_original', name: '面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_original', name: '面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_original', name: '面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_original', name: '吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_original', name: '原味礼盒', image: '/assets/ingredients_new/gift_origin.png' },
   },
   strawberry: {
-    wheat: { id: 'wheat_strawberry', name: '草莓小麦', image: '/assets/ingredients/block_wheat_strawberry.png' },
-    flour: { id: 'flour_strawberry', name: '草莓面粉', image: '/assets/ingredients/block_flour_strawberry.png' },
-    dough: { id: 'dough_strawberry', name: '草莓面团', image: '/assets/ingredients/block_dough_strawberry.png' },
-    baking: { id: 'bread_strawberry', name: '草莓面包坯', image: '/assets/ingredients/block_bread_strawberry.png' },
-    toast: { id: 'toast_strawberry', name: '草莓吐司', image: '/assets/ingredients/block_toast_strawberry.png' },
-    gift: { id: 'gift_strawberry', name: '草莓礼盒', image: '/assets/ingredients/block_gift_strawberry.png' },
+    wheat: { id: 'wheat_strawberry', name: '草莓小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_strawberry', name: '草莓面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_strawberry', name: '草莓面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_strawberry', name: '草莓面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_strawberry', name: '草莓吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_strawberry', name: '草莓礼盒', image: '/assets/ingredients_new/gift_strawberry.png' },
+  },
+  matcha: {
+    wheat: { id: 'wheat_matcha', name: '抹茶小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_matcha', name: '抹茶面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_matcha', name: '抹茶面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_matcha', name: '抹茶面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_matcha', name: '抹茶吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_matcha', name: '抹茶礼盒', image: '/assets/ingredients_new/gift_matcha.png' },
+  },
+  mango: {
+    wheat: { id: 'wheat_mango', name: '芒果小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_mango', name: '芒果面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_mango', name: '芒果面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_mango', name: '芒果面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_mango', name: '芒果吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_mango', name: '芒果礼盒', image: '/assets/ingredients_new/gift_mango.png' },
+  },
+  sea_buckthorn_berry: {
+    wheat: { id: 'wheat_seaberry', name: '沙棘小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_seaberry', name: '沙棘面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_seaberry', name: '沙棘面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_seaberry', name: '沙棘面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_seaberry', name: '沙棘吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_seaberry', name: '沙棘礼盒', image: '/assets/ingredients_new/gift_seaberry.png' },
+  },
+  ice_cream: {
+    wheat: { id: 'wheat_icecream', name: '冰淇淋小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_icecream', name: '冰淇淋面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_icecream', name: '冰淇淋面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_icecream', name: '冰淇淋面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_icecream', name: '冰淇淋吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_icecream', name: '冰淇淋礼盒', image: '/assets/ingredients_new/gift_icecream.png' },
+  },
+  spicy: {
+    wheat: { id: 'wheat_chili', name: '辣椒小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_chili', name: '辣椒面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_chili', name: '辣椒面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_chili', name: '辣椒面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_chili', name: '辣椒吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_chili', name: '辣椒礼盒', image: '/assets/ingredients_new/gift_spicy.png' },
+  },
+  passion_fruit: {
+    wheat: { id: 'wheat_passionfruit', name: '百香果小麦', image: '/assets/ingredients_new/wheat.png' },
+    flour: { id: 'flour_passionfruit', name: '百香果面粉', image: '/assets/ingredients_new/flour.png' },
+    dough: { id: 'dough_passionfruit', name: '百香果面团', image: '/assets/ingredients_new/dough.png' },
+    bread: { id: 'bread_passionfruit', name: '百香果面包', image: '/assets/ingredients_new/bread.png' },
+    toast: { id: 'toast_passionfruit', name: '百香果吐司', image: '/assets/ingredients_new/toast.png' },
+    gift: { id: 'gift_passionfruit', name: '百香果礼盒', image: '/assets/ingredients_new/gift_passionfruit.png' },
   },
 };
 
@@ -49,7 +89,7 @@ class FlavorManager {
         '1': 'wheat',
         '2': 'flour',
         '3': 'dough',
-        '4': 'baking',
+        '4': 'bread',
         '5': 'toast',
         '6': 'gift',
       };
@@ -151,6 +191,30 @@ class FlavorManager {
     }
 
     return urls;
+  }
+
+  /**
+   * 获取口味徽章图片路径
+   * 原味返回 null，其他口味返回徽章图片路径
+   */
+  getFlavorBadgeImage(flavor: FlavorType): string | null {
+    if (flavor === 'original') {
+      return null;
+    }
+    
+    // Figma 导出的口味徽章映射
+    const badgeMap: Record<string, string> = {
+      strawberry: '/assets/flavors/flavor_strawberry_36.png',
+      matcha: '/assets/flavors/flavor_matcha_36.png',
+      mango: '/assets/flavors/flavor_mango_36.png',
+      sea_buckthorn_berry: '/assets/flavors/flavor_seaberry_36.png',
+      ice_cream: '/assets/flavors/flavor_icecream_36.png',
+      spicy: '/assets/flavors/flavor_chili_36.png',
+      passion_fruit: '/assets/flavors/flavor_passionfruit_36.png',
+      unknown: '/assets/flavors/flavor_unknown_36.png',
+    };
+    
+    return badgeMap[flavor] ?? null;
   }
 }
 

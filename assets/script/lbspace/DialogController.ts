@@ -129,11 +129,11 @@ export class DialogController extends Controller {
         if (this._fadeInAnim !== null && this.content) {
             TweenUtils.fadeOut(this.content, () => {
                 this.node.emit(DialogController.EventType.OnDestroy);
-                this.node.destroy();
+                this.node.active = false;
             }, 0.15);
         } else {
             this.node.emit(DialogController.EventType.OnDestroy);
-            this.node.destroy();
+            this.node.active = false;
         }
 
         if (this.mask) {

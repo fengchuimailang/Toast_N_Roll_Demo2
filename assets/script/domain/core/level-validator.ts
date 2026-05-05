@@ -7,7 +7,7 @@ import type {
   PresetIngredientConfig,
 } from '../types/level';
 
-const KNOWN_INGREDIENT_TYPES: IngredientType[] = ['wheat', 'flour', 'dough', 'baking', 'toast', 'gift'];
+const KNOWN_INGREDIENT_TYPES: IngredientType[] = ['wheat', 'flour', 'dough', 'bread', 'toast', 'gift'];
 const KNOWN_DIFFICULTIES = new Set<LevelConfig['difficulty']>(['tutorial', 'easy', 'normal', 'hard', 'expert']);
 
 export interface LevelValidationResult {

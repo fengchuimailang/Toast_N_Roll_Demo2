@@ -362,7 +362,7 @@ const COLORS = {
   wheat: '#D4A574',        // 小麦 - 土黄
   flour: '#F5F5DC',        // 面粉 - 米白
   dough: '#F4A460',        // 面团 - 沙棕
-  baking: '#DEB887',       // 面包坯 - 原木
+  bread: '#DEB887',          // 面包 - 原木
   toast: '#D2691E',        // 吐司 - 巧克力
   gift: '#FFD700',         // 礼盒 - 金色
   

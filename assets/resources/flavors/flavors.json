@@ -1,18 +1,19 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "flavors": [
     {
       "flavorId": "original",
       "flavorName": "原味",
       "unlockLevel": 1,
       "chain": {
-        "1": { "id": "wheat_original", "name": "小麦", "image": "/assets/ingredients/block_wheat_original.png" },
-        "2": { "id": "flour_original", "name": "面粉", "image": "/assets/ingredients/block_flour_original.png" },
-        "3": { "id": "dough_original", "name": "面团", "image": "/assets/ingredients/block_dough_original.png" },
-        "4": { "id": "bread_original", "name": "面包坯", "image": "/assets/ingredients/block_bread_original.png" },
-        "5": { "id": "toast_original", "name": "吐司", "image": "/assets/ingredients/block_toast_original.png" },
-        "6": { "id": "gift_original", "name": "原味礼盒", "image": "/assets/ingredients/block_gift_original.png" }
+        "1": { "id": "wheat_original", "name": "小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_original", "name": "面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_original", "name": "面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_original", "name": "面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_original", "name": "吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_original", "name": "原味礼盒", "image": "/assets/ingredients_new/gift_origin.png" }
       },
+      "badge": null,
       "visuals": {
         "primaryColor": "#F5DEB3",
         "secondaryColor": "#D2691E",
@@ -22,15 +23,16 @@
     {
       "flavorId": "strawberry",
       "flavorName": "草莓",
-      "unlockLevel": 8,
+      "unlockLevel": 3,
       "chain": {
-        "1": { "id": "wheat_strawberry", "name": "草莓小麦", "image": "/assets/ingredients/block_wheat_strawberry.png" },
-        "2": { "id": "flour_strawberry", "name": "草莓面粉", "image": "/assets/ingredients/block_flour_strawberry.png" },
-        "3": { "id": "dough_strawberry", "name": "草莓面团", "image": "/assets/ingredients/block_dough_strawberry.png" },
-        "4": { "id": "bread_strawberry", "name": "草莓面包坯", "image": "/assets/ingredients/block_bread_strawberry.png" },
-        "5": { "id": "toast_strawberry", "name": "草莓吐司", "image": "/assets/ingredients/block_toast_strawberry.png" },
-        "6": { "id": "gift_strawberry", "name": "草莓礼盒", "image": "/assets/ingredients/block_gift_strawberry.png" }
+        "1": { "id": "wheat_strawberry", "name": "草莓小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_strawberry", "name": "草莓面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_strawberry", "name": "草莓面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_strawberry", "name": "草莓面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_strawberry", "name": "草莓吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_strawberry", "name": "草莓礼盒", "image": "/assets/ingredients_new/gift_strawberry.png" }
       },
+      "badge": "/assets/flavors/flavor_strawberry_36.png",
       "visuals": {
         "primaryColor": "#FFB6C1",
         "secondaryColor": "#FF69B4",
@@ -40,20 +42,126 @@
     {
       "flavorId": "matcha",
       "flavorName": "抹茶",
-      "unlockLevel": 15,
+      "unlockLevel": 5,
       "chain": {
-        "1": { "id": "wheat_matcha", "name": "抹茶小麦", "image": "/assets/ingredients/block_wheat_matcha.png" },
-        "2": { "id": "flour_matcha", "name": "抹茶面粉", "image": "/assets/ingredients/block_flour_matcha.png" },
-        "3": { "id": "dough_matcha", "name": "抹茶面团", "image": "/assets/ingredients/block_dough_matcha.png" },
-        "4": { "id": "bread_matcha", "name": "抹茶面包坯", "image": "/assets/ingredients/block_bread_matcha.png" },
-        "5": { "id": "toast_matcha", "name": "抹茶吐司", "image": "/assets/ingredients/block_toast_matcha.png" },
-        "6": { "id": "gift_matcha", "name": "抹茶礼盒", "image": "/assets/ingredients/block_gift_matcha.png" }
+        "1": { "id": "wheat_matcha", "name": "抹茶小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_matcha", "name": "抹茶面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_matcha", "name": "抹茶面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_matcha", "name": "抹茶面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_matcha", "name": "抹茶吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_matcha", "name": "抹茶礼盒", "image": "/assets/ingredients_new/gift_matcha.png" }
       },
+      "badge": "/assets/flavors/flavor_matcha_36.png",
       "visuals": {
-        "primaryColor": "#8B4513",
-        "secondaryColor": "#654321",
+        "primaryColor": "#90EE90",
+        "secondaryColor": "#32CD32",
         "pattern": "stripes"
       }
+    },
+    {
+      "flavorId": "mango",
+      "flavorName": "芒果",
+      "unlockLevel": 7,
+      "chain": {
+        "1": { "id": "wheat_mango", "name": "芒果小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_mango", "name": "芒果面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_mango", "name": "芒果面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_mango", "name": "芒果面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_mango", "name": "芒果吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_mango", "name": "芒果礼盒", "image": "/assets/ingredients_new/gift_mango.png" }
+      },
+      "badge": "/assets/flavors/flavor_mango_36.png",
+      "visuals": {
+        "primaryColor": "#FFD700",
+        "secondaryColor": "#FFA500",
+        "pattern": "none"
+      }
+    },
+    {
+      "flavorId": "sea_buckthorn_berry",
+      "flavorName": "沙棘",
+      "unlockLevel": 10,
+      "chain": {
+        "1": { "id": "wheat_seaberry", "name": "沙棘小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_seaberry", "name": "沙棘面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_seaberry", "name": "沙棘面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_seaberry", "name": "沙棘面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_seaberry", "name": "沙棘吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_seaberry", "name": "沙棘礼盒", "image": "/assets/ingredients_new/gift_seaberry.png" }
+      },
+      "badge": "/assets/flavors/flavor_seaberry_36.png",
+      "visuals": {
+        "primaryColor": "#FFA500",
+        "secondaryColor": "#FF8C00",
+        "pattern": "dots"
+      }
+    },
+    {
+      "flavorId": "ice_cream",
+      "flavorName": "冰淇淋",
+      "unlockLevel": 12,
+      "chain": {
+        "1": { "id": "wheat_icecream", "name": "冰淇淋小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_icecream", "name": "冰淇淋面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_icecream", "name": "冰淇淋面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_icecream", "name": "冰淇淋面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_icecream", "name": "冰淇淋吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_icecream", "name": "冰淇淋礼盒", "image": "/assets/ingredients_new/gift_icecream.png" }
+      },
+      "badge": "/assets/flavors/flavor_icecream_36.png",
+      "visuals": {
+        "primaryColor": "#FFF0F5",
+        "secondaryColor": "#FFB6C1",
+        "pattern": "stripes"
+      }
+    },
+    {
+      "flavorId": "spicy",
+      "flavorName": "辣椒",
+      "unlockLevel": 15,
+      "chain": {
+        "1": { "id": "wheat_chili", "name": "辣椒小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_chili", "name": "辣椒面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_chili", "name": "辣椒面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_chili", "name": "辣椒面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_chili", "name": "辣椒吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_chili", "name": "辣椒礼盒", "image": "/assets/ingredients_new/gift_spicy.png" }
+      },
+      "badge": "/assets/flavors/flavor_chili_36.png",
+      "visuals": {
+        "primaryColor": "#FF4500",
+        "secondaryColor": "#DC143C",
+        "pattern": "dots"
+      }
+    },
+    {
+      "flavorId": "passion_fruit",
+      "flavorName": "百香果",
+      "unlockLevel": 18,
+      "chain": {
+        "1": { "id": "wheat_passionfruit", "name": "百香果小麦", "image": "/assets/ingredients_new/wheat.png" },
+        "2": { "id": "flour_passionfruit", "name": "百香果面粉", "image": "/assets/ingredients_new/flour.png" },
+        "3": { "id": "dough_passionfruit", "name": "百香果面团", "image": "/assets/ingredients_new/dough.png" },
+        "4": { "id": "bread_passionfruit", "name": "百香果面包", "image": "/assets/ingredients_new/bread.png" },
+        "5": { "id": "toast_passionfruit", "name": "百香果吐司", "image": "/assets/ingredients_new/toast.png" },
+        "6": { "id": "gift_passionfruit", "name": "百香果礼盒", "image": "/assets/ingredients_new/gift_passionfruit.png" }
+      },
+      "badge": "/assets/flavors/flavor_passionfruit_36.png",
+      "visuals": {
+        "primaryColor": "#9932CC",
+        "secondaryColor": "#8B008B",
+        "pattern": "none"
+      }
     }
-  ]
+  ],
+  "tray": {
+    "variants": ["Vertical", "Horizontal", "Bend", "Fold", "pressed"],
+    "sizes": {
+      "Vertical": { "width": 64, "height": 136 },
+      "Horizontal": { "width": 128, "height": 70 },
+      "Bend": { "width": 128, "height": 136 },
+      "Fold": { "width": 128, "height": 136 },
+      "pressed": { "width": 64, "height": 70 }
+    }
+  }
 }
