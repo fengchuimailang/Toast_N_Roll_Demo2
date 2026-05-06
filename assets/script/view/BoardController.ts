@@ -24,9 +24,9 @@ import {
   type SessionStateSnapshot,
   type SessionSwapTimeline,
 } from '../game/session/GameSession';
-import { PrefabLoader } from '../lbspace/PrefabLoader';
+import { PrefabLoader } from '../lbspace/common/PrefabLoader';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
-import { CellView } from './CellView';
+import { CellController } from './CellController';
 import { trayManager, type TrayInfo } from '../domain/core/tray-manager';
 import { flavorManager } from '../domain/core/flavor-manager';
 
@@ -60,8 +60,8 @@ function areSamePosition(a: GridPosition | null, b: GridPosition | null): boolea
   return !!a && !!b && a.row === b.row && a.col === b.col;
 }
 
-@ccclass('BoardView')
-export class BoardView extends Component {
+@ccclass('BoardController')
+export class BoardController extends Component {
   private session: GameSession | null = null;
   private graphics: Graphics | null = null;
   private selectedCell: GridPosition | null = null;
@@ -72,8 +72,8 @@ export class BoardView extends Component {
   private lastOriginX = 0;
   private lastOriginY = 0;
   private readonly spriteFrameLoader = new SpriteFrameLoader();
-  private cellViews = new Map<string, CellView>();
-  private readonly cellPool: CellView[] = [];
+  private cellViews = new Map<string, CellController>();
+  private readonly cellPool: CellController[] = [];
   private unsubscribe: (() => void) | null = null;
   private cellPrefab: Prefab | null = null;
   private cellPrefabRequested = false;
@@ -150,7 +150,7 @@ export class BoardView extends Component {
     this.toolSelection = snapshot.toolSelection;
 
     this.drawBackground(gridSize, cellSize, originX, originY);
-    this.syncCellViews(snapshot, previousSnapshot, animate);
+    this.syncCellControllers(snapshot, previousSnapshot, animate);
   }
 
   private ensureScaffold(): void {
@@ -242,7 +242,7 @@ export class BoardView extends Component {
     graphics.stroke();
   }
 
-  private syncCellViews(
+  private syncCellControllers(
     snapshot: SessionStateSnapshot,
     previousSnapshot: SessionStateSnapshot | null,
     animate: boolean,
@@ -266,7 +266,7 @@ export class BoardView extends Component {
         const targetPosition = this.getWorldPosition(cell.position);
         let cellView = this.cellViews.get(ingredient.id);
         if (!cellView) {
-          cellView = this.createCellView(ingredient.id);
+          cellView = this.createCellController(ingredient.id);
           this.cellViews.set(ingredient.id, cellView);
           const startPosition = oldIngredientPositions.get(ingredient.id)
             ? this.getWorldPosition(oldIngredientPositions.get(ingredient.id)!)
@@ -306,7 +306,7 @@ export class BoardView extends Component {
         }
 
         cellView.setOpacity(255);
-        tweenJobs.push(this.animateCellView(cellView, targetPosition));
+        tweenJobs.push(this.animateCellController(cellView, targetPosition));
       }
     }
 
@@ -316,7 +316,7 @@ export class BoardView extends Component {
       }
 
       if (!animate) {
-        this.releaseCellView(cellView);
+        this.releaseCellController(cellView);
         this.cellViews.delete(ingredientId);
         continue;
       }
@@ -326,7 +326,7 @@ export class BoardView extends Component {
         tween(cellView.node)
           .to(0.14, { scale: new Vec3(0.2, 0.2, 1) })
           .call(() => {
-            this.releaseCellView(cellView);
+            this.releaseCellController(cellView);
             this.cellViews.delete(ingredientId);
             resolve();
           })
@@ -346,7 +346,7 @@ export class BoardView extends Component {
     });
   }
 
-  private animateCellView(cellView: CellView, targetPosition: Vec3): Promise<void> {
+  private animateCellController(cellView: CellController, targetPosition: Vec3): Promise<void> {
     return new Promise((resolve) => {
       Tween.stopAllByTarget(cellView.node);
       tween(cellView.node)
@@ -362,8 +362,8 @@ export class BoardView extends Component {
     });
   }
 
-  private createCellView(id: string): CellView {
-    const cellView = this.cellPool.pop() ?? this.instantiateCellView();
+  private createCellController(id: string): CellController {
+    const cellView = this.cellPool.pop() ?? this.instantiateCellController();
     cellView.node.name = `Cell-${id}`;
     cellView.node.layer = Layers.Enum.UI_2D;
     cellView.node.parent = this.node;
@@ -371,14 +371,14 @@ export class BoardView extends Component {
     return cellView;
   }
 
-  private instantiateCellView(): CellView {
+  private instantiateCellController(): CellController {
     const node = this.cellPrefab ? instantiate(this.cellPrefab) : new Node('CellPooled');
     node.layer = Layers.Enum.UI_2D;
     node.parent = this.node;
-    return node.getComponent(CellView) ?? node.addComponent(CellView);
+    return node.getComponent(CellController) ?? node.addComponent(CellController);
   }
 
-  private releaseCellView(cellView: CellView): void {
+  private releaseCellController(cellView: CellController): void {
     Tween.stopAllByTarget(cellView.node);
     cellView.resetViewState();
     cellView.node.removeFromParent();
@@ -386,7 +386,7 @@ export class BoardView extends Component {
     this.cellPool.push(cellView);
   }
 
-  private applyIngredientSprite(cellView: CellView, imagePath: string): void {
+  private applyIngredientSprite(cellView: CellController, imagePath: string): void {
     const key = imagePathToResourceKey(imagePath);
     const cached = this.spriteFrameLoader.get(key);
     if (cached !== undefined) {
@@ -673,7 +673,7 @@ export class BoardView extends Component {
   private animateMatchedIds(ids: string[]): Promise<void> {
     const animations = ids
       .map((id) => ({ id, view: this.cellViews.get(id) }))
-      .filter((entry): entry is { id: string; view: CellView } => !!entry.view)
+      .filter((entry): entry is { id: string; view: CellController } => !!entry.view)
       .map(({ id, view }) => new Promise<void>((resolve) => {
         Tween.stopAllByTarget(view.node);
         tween(view.node)

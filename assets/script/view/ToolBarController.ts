@@ -73,8 +73,8 @@ const TOOL_SPECS: ToolSpec[] = [
   },
 ];
 
-@ccclass('ToolBarView')
-export class ToolBarView extends Component {
+@ccclass('ToolBarController')
+export class ToolBarController extends Component {
   private background: Graphics | null = null;
   private readonly spriteFrameLoader = new SpriteFrameLoader();
   private readonly toolButtons = new Map<ToolType, ToolButtonRefs>();

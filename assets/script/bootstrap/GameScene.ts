@@ -1,19 +1,21 @@
 import { _decorator, Color, Component, Graphics, Label, Layers, Node, Prefab, Sprite, SpriteFrame, UITransform, Vec3, director, instantiate, resources, view } from 'cc';
 import { GameSession } from '../game/session/GameSession';
-import { PrefabLoader } from '../lbspace/PrefabLoader';
+import { PrefabLoader } from '../lbspace/common/PrefabLoader';
+import { Utils } from '../lbspace/utils/Utils';
 import { CocosAssetWarmup } from '../infra/CocosAssetWarmup';
 import { LevelProgressStore } from '../infra/LevelProgressStore';
 import { SettingsStore } from '../infra/SettingsStore';
-import { BoardView } from '../view/BoardView';
-import { HomeOverlayView } from '../view/HomeOverlayView';
-import { HudView } from '../view/HudView';
-import { LevelSelectOverlayView } from '../view/LevelSelectOverlayView';
-import { LoadingOverlayView } from '../view/LoadingOverlayView';
-import { MessageOverlayView } from '../view/MessageOverlayView';
-import { SettingsOverlayView, type SettingsOverlayMode } from '../view/SettingsOverlayView';
-import { SettlementOverlayView } from '../view/SettlementOverlayView';
-import { ToolBarView } from '../view/ToolBarView';
-import { TutorialOverlayView } from '../view/TutorialOverlayView';
+import { BoardController } from '../view/BoardController';
+import { HomeOverlayController } from '../view/HomeOverlayController';
+import { HudController } from '../view/HudController';
+import { LevelSelectOverlayController } from '../view/LevelSelectOverlayController';
+import { LoadingOverlayController } from '../view/LoadingOverlayController';
+import { MessageOverlayController } from '../view/MessageOverlayController';
+import { SettingsOverlayController, type SettingsOverlayMode } from '../view/SettingsOverlayController';
+import { SettlementOverlayController } from '../view/SettlementOverlayController';
+import { StatusBarController } from '../view/StatusBarController';
+import { ToolBarController } from '../view/ToolBarController';
+import { TutorialOverlayController } from '../view/TutorialOverlayController';
 
 const { ccclass } = _decorator;
 
@@ -43,16 +45,17 @@ export class GameScene extends Component {
   private readonly settingsStore = new SettingsStore();
   private readonly levelProgressStore = new LevelProgressStore();
   private session: GameSession | null = null;
-  private boardView: BoardView | null = null;
-  private hudView: HudView | null = null;
-  private toolBarView: ToolBarView | null = null;
-  private settlementOverlayView: SettlementOverlayView | null = null;
-  private messageOverlayView: MessageOverlayView | null = null;
-  private levelSelectOverlayView: LevelSelectOverlayView | null = null;
-  private homeOverlayView: HomeOverlayView | null = null;
-  private loadingOverlayView: LoadingOverlayView | null = null;
-  private settingsOverlayView: SettingsOverlayView | null = null;
-  private tutorialOverlayView: TutorialOverlayView | null = null;
+  private boardView: BoardController | null = null;
+  private hudView: HudController | null = null;
+  private toolBarView: ToolBarController | null = null;
+  private settlementOverlayView: SettlementOverlayController | null = null;
+  private messageOverlayView: MessageOverlayController | null = null;
+  private levelSelectOverlayView: LevelSelectOverlayController | null = null;
+  private homeOverlayView: HomeOverlayController | null = null;
+  private loadingOverlayView: LoadingOverlayController | null = null;
+  private settingsOverlayView: SettingsOverlayController | null = null;
+  private tutorialOverlayView: TutorialOverlayController | null = null;
+  private statusBarView: StatusBarController | null = null;
   private levelButtonNode: Node | null = null;
   private homeButtonNode: Node | null = null;
   private pauseButtonNode: Node | null = null;
@@ -102,7 +105,7 @@ export class GameScene extends Component {
   }
 
   private async startLoadingScene(): Promise<void> {
-    await this.ensureLoadingOverlayView();
+    await this.ensureLoadingOverlayController();
     await this.loadingOverlayView?.play(async () => {
       await this.assetWarmup.preloadCriticalAssets();
     });
@@ -111,13 +114,19 @@ export class GameScene extends Component {
 
   private async startLobbyScene(): Promise<void> {
     await Promise.all([
-      this.ensureHomeOverlayView(),
-      this.ensureLevelSelectOverlayView(),
-      this.ensureSettingsOverlayView(),
-      this.ensureTutorialOverlayView(),
+      this.ensureHomeOverlayController(),
+      this.ensureLevelSelectOverlayController(),
+      this.ensureSettingsOverlayController(),
+      this.ensureTutorialOverlayController(),
+      this.ensureStatusBarController(),
     ]);
 
     this.bindSharedViews();
+
+    if (this.statusBarView && this.session) {
+      this.statusBarView.bind(this.session);
+      this.statusBarView.setShowEnergy(true);
+    }
 
     if (this.homeOverlayView) {
       this.homeOverlayView.bind(async () => {
@@ -165,18 +174,23 @@ export class GameScene extends Component {
   private async startGameScene(): Promise<void> {
     await Promise.all([
       this.ensureBackground(),
-      this.ensureHudView(),
-      this.ensureBoardView(),
-      this.ensureToolBarView(),
-      this.ensureSettlementOverlayView(),
-      this.ensureMessageOverlayView(),
-      this.ensureLevelSelectOverlayView(),
-      this.ensureSettingsOverlayView(),
+      this.ensureStatusBarController(),
+      this.ensureHudController(),
+      this.ensureBoardController(),
+      this.ensureToolBarController(),
+      this.ensureSettlementOverlayController(),
+      this.ensureMessageOverlayController(),
+      this.ensureLevelSelectOverlayController(),
+      this.ensureSettingsOverlayController(),
       this.ensureLevelButton(),
     ]);
 
     this.bindSharedViews();
 
+    if (this.statusBarView && this.session) {
+      this.statusBarView.bind(this.session);
+      this.statusBarView.setShowEnergy(false);
+    }
     if (this.hudView && this.session) {
       this.hudView.bind(this.session);
     }
@@ -233,40 +247,56 @@ export class GameScene extends Component {
     }
   }
 
-  private async ensureLoadingOverlayView(): Promise<void> {
+  private async ensureLoadingOverlayController(): Promise<void> {
     if (this.loadingOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/LoadingOverlayRoot', 'ProgrammaticLoadingOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.loadingOverlayView = viewNode.addComponent(LoadingOverlayView);
+    this.loadingOverlayView = viewNode.addComponent(LoadingOverlayController);
   }
 
-  private async ensureSettingsOverlayView(): Promise<void> {
+  private async ensureSettingsOverlayController(): Promise<void> {
     if (this.settingsOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/SettingsOverlayRoot', 'ProgrammaticSettingsOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.settingsOverlayView = viewNode.addComponent(SettingsOverlayView);
+    this.settingsOverlayView = viewNode.addComponent(SettingsOverlayController);
   }
 
-  private async ensureTutorialOverlayView(): Promise<void> {
+  private async ensureTutorialOverlayController(): Promise<void> {
     if (this.tutorialOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/TutorialOverlayRoot', 'ProgrammaticTutorialOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.tutorialOverlayView = viewNode.addComponent(TutorialOverlayView);
+    this.tutorialOverlayView = viewNode.addComponent(TutorialOverlayController);
   }
 
-  private async ensureHudView(): Promise<void> {
+  private async ensureStatusBarController(): Promise<void> {
+    if (this.statusBarView) {
+      return;
+    }
+
+    const safeAreaTop = Utils.getSafeArea().top
+    const barHeight = Math.max(safeAreaTop, 44)
+
+    const viewNode = new Node('ProgrammaticStatusBar')
+    viewNode.layer = Layers.Enum.UI_2D
+    viewNode.parent = this.node
+    viewNode.addComponent(UITransform).setContentSize(750, barHeight)
+    this.statusBarView = viewNode.addComponent(StatusBarController)
+    this.refreshLayout()
+  }
+
+  private async ensureHudController(): Promise<void> {
     if (this.hudView) {
       return;
     }
 
-    const viewNode = await this.instantiateUiRoot('prefabs/HudRoot', 'ProgrammaticHudView', new Vec3(0, 500, 0), HUD_SIZE);
-    this.hudView = viewNode.addComponent(HudView);
+    const viewNode = await this.instantiateUiRoot('prefabs/HudRoot', 'ProgrammaticHudController', new Vec3(0, 500, 0), HUD_SIZE);
+    this.hudView = viewNode.addComponent(HudController);
     this.refreshLayout();
   }
 
@@ -300,65 +330,65 @@ export class GameScene extends Component {
     });
   }
 
-  private async ensureBoardView(): Promise<void> {
+  private async ensureBoardController(): Promise<void> {
     if (this.boardView) {
       return;
     }
 
-    const viewNode = new Node('ProgrammaticBoardView');
+    const viewNode = new Node('ProgrammaticBoardController');
     viewNode.layer = Layers.Enum.UI_2D;
     viewNode.parent = this.node;
     viewNode.setPosition(new Vec3(0, 10, 0));
     viewNode.addComponent(UITransform);
 
-    this.boardView = viewNode.addComponent(BoardView);
+    this.boardView = viewNode.addComponent(BoardController);
     this.refreshLayout();
   }
 
-  private async ensureToolBarView(): Promise<void> {
+  private async ensureToolBarController(): Promise<void> {
     if (this.toolBarView) {
       return;
     }
 
-    const viewNode = await this.instantiateUiRoot('prefabs/ToolBarRoot', 'ProgrammaticToolBarView', new Vec3(0, -470, 0), TOOLBAR_SIZE);
-    this.toolBarView = viewNode.addComponent(ToolBarView);
+    const viewNode = await this.instantiateUiRoot('prefabs/ToolBarRoot', 'ProgrammaticToolBarController', new Vec3(0, -470, 0), TOOLBAR_SIZE);
+    this.toolBarView = viewNode.addComponent(ToolBarController);
     this.refreshLayout();
   }
 
-  private async ensureSettlementOverlayView(): Promise<void> {
+  private async ensureSettlementOverlayController(): Promise<void> {
     if (this.settlementOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/SettlementOverlayRoot', 'ProgrammaticSettlementOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.settlementOverlayView = viewNode.addComponent(SettlementOverlayView);
+    this.settlementOverlayView = viewNode.addComponent(SettlementOverlayController);
   }
 
-  private async ensureMessageOverlayView(): Promise<void> {
+  private async ensureMessageOverlayController(): Promise<void> {
     if (this.messageOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/MessageOverlayRoot', 'ProgrammaticMessageOverlay', new Vec3(0, -278, 0), { width: 520, height: 72 });
-    this.messageOverlayView = viewNode.addComponent(MessageOverlayView);
+    this.messageOverlayView = viewNode.addComponent(MessageOverlayController);
   }
 
-  private async ensureLevelSelectOverlayView(): Promise<void> {
+  private async ensureLevelSelectOverlayController(): Promise<void> {
     if (this.levelSelectOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/LevelSelectOverlayRoot', 'ProgrammaticLevelSelectOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.levelSelectOverlayView = viewNode.addComponent(LevelSelectOverlayView);
+    this.levelSelectOverlayView = viewNode.addComponent(LevelSelectOverlayController);
   }
 
-  private async ensureHomeOverlayView(): Promise<void> {
+  private async ensureHomeOverlayController(): Promise<void> {
     if (this.homeOverlayView) {
       return;
     }
 
     const viewNode = await this.instantiateUiRoot('prefabs/HomeOverlayRoot', 'ProgrammaticHomeOverlay', Vec3.ZERO, { width: 750, height: 1334 });
-    this.homeOverlayView = viewNode.addComponent(HomeOverlayView);
+    this.homeOverlayView = viewNode.addComponent(HomeOverlayController);
   }
 
   private async ensureLevelButton(): Promise<void> {
@@ -412,12 +442,17 @@ export class GameScene extends Component {
     const top = canvasSize.height / 2;
     const bottom = -canvasSize.height / 2;
     const right = canvasSize.width / 2;
+    const safeAreaTop = Utils.getSafeArea().top;
+    const adjustedTop = top - safeAreaTop;
 
     const hudHalf = HUD_SIZE.height / 2;
     const boardHalf = BOARD_SIZE.height / 2;
     const toolbarHalf = TOOLBAR_SIZE.height / 2;
 
-    const hudY = top - hudHalf - 42;
+    const statusBarHeight = Math.max(safeAreaTop, 44);
+    this.statusBarView?.node.setPosition(0, top - statusBarHeight / 2, 0);
+
+    const hudY = adjustedTop - hudHalf - 42;
     const toolbarY = bottom + toolbarHalf + 44;
     const boardTopLimit = hudY - hudHalf - 28 - boardHalf;
     const boardBottomLimit = toolbarY + toolbarHalf + 28 + boardHalf;
@@ -429,7 +464,7 @@ export class GameScene extends Component {
     this.boardView?.node.setPosition(0, boardY, 0);
     this.toolBarView?.node.setPosition(0, toolbarY, 0);
 
-    const actionButtonY = top - 62;
+    const actionButtonY = adjustedTop - 62;
     const pauseX = right - 64;
     const homeX = pauseX - 92;
     const levelX = homeX - 92;

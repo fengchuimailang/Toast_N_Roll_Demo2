@@ -14,7 +14,7 @@ import {
 
 import type { SessionHomeSummary } from '../game/session/GameSession';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
-import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
+import { create9SliceButtonAsync } from '../lbspace/utils/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -120,8 +120,8 @@ const AREA_THEMES: AreaTheme[] = [
   },
 ];
 
-@ccclass('HomeOverlayView')
-export class HomeOverlayView extends Component {
+@ccclass('HomeOverlayController')
+export class HomeOverlayController extends Component {
   private readonly spriteFrameLoader = new SpriteFrameLoader();
 
   private summary: SessionHomeSummary | null = null;

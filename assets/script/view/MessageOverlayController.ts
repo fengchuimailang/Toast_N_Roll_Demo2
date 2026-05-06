@@ -1,7 +1,6 @@
 import {
   _decorator,
   Color,
-  EventTouch,
   Graphics,
   Label,
   Layers,
@@ -10,7 +9,7 @@ import {
   Vec3,
 } from 'cc';
 
-import { TopController } from '../lbspace/TopController';
+import { DialogController } from '../lbspace/components/DialogController';
 import { GameSession, type SessionEvent } from '../game/session/GameSession';
 
 const { ccclass } = _decorator;
@@ -20,13 +19,15 @@ const MESSAGE_HEIGHT = 88;
 
 type NoticeTone = 'neutral' | 'success' | 'warning';
 
-@ccclass('MessageOverlayView')
-export class MessageOverlayView extends TopController {
+@ccclass('MessageOverlayController')
+export class MessageOverlayController extends DialogController {
   private unsubscribe: (() => void) | null = null;
   private background: Graphics | null = null;
   private accent: Graphics | null = null;
   private titleLabel: Label | null = null;
   private messageLabel: Label | null = null;
+
+  protected _fadeInAnim = 'fromTop' as const;
 
   protected static _getPrefab(): null {
     return null;
@@ -107,9 +108,10 @@ export class MessageOverlayView extends TopController {
     this.titleLabel!.string = this.getTitleByTone(tone);
     this.messageLabel!.string = message;
 
-    if (durationMs !== undefined) {
-      this.setAutoCloseDelay(durationMs);
-    }
+    const duration = (durationMs ?? 2000) / 1000;
+    this.scheduleOnce(() => {
+      this.close();
+    }, duration);
   }
 
   public showMessage(message: string, durationMs?: number): void {
@@ -117,7 +119,7 @@ export class MessageOverlayView extends TopController {
       return;
     }
 
-    this._open(message, durationMs);
+    this.open(message, durationMs);
   }
 
   private resolveTone(message: string): NoticeTone {

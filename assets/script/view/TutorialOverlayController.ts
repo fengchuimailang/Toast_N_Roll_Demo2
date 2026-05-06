@@ -13,7 +13,7 @@ import {
   Vec3,
 } from 'cc';
 
-import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
+import { create9SliceButtonAsync } from '../lbspace/utils/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -184,8 +184,8 @@ const STEPS: TutorialStep[] = [
   },
 ];
 
-@ccclass('TutorialOverlayView')
-export class TutorialOverlayView extends Component {
+@ccclass('TutorialOverlayController')
+export class TutorialOverlayController extends Component {
   private stepIndex = 0;
   private onCompleteHandler: (() => Promise<void>) | null = null;
   private onSkipHandler: (() => Promise<void>) | null = null;

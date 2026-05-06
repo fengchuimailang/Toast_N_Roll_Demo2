@@ -1,43 +1,10 @@
-/**
- * 🎭 DialogController - 弹窗基类
- * 借鉴自 ref_project/dlspace/components/DialogController
- *
- * 功能：
- * - 统一的弹窗打开/关闭动画
- * - 遮罩层管理
- * - 输入拦截（BlockInputEvents）
- * - 事件通知（OnClose/OnDestroy）
- *
- * 使用方式：
- * ```typescript
- * // 方式一：继承
- * @ccclass('MyDialog')
- * export class MyDialog extends DialogController {
- *     protected static _getPrefab(): Prefab {
- *         return resources.get('prefabs/MyDialog') as Prefab;
- *     }
- *
- *     protected _open(data: MyData): void {
- *         this.showMask();
- *         // 初始化内容
- *     }
- * }
- *
- * // 方式二：静态创建
- * const dialog = MyDialog.show(myData);
- * dialog.node.on(DialogController.EventType.OnClose, () => {});
- * dialog.close();
- * ```
- */
-
 import { _decorator, BlockInputEvents, Node, Prefab, instantiate } from 'cc';
-import { UIMgr } from './UIMgr';
-import { TweenFadeInType, TweenUtils } from './TweenUtils';
+import { UIMgr } from '../common/UIMgr';
+import { TweenFadeInType, TweenUtils } from '../utils/TweenUtils';
 import { Controller } from './Controller';
-
 const { ccclass, property } = _decorator;
 
-export enum DialogEventType {
+enum DialogEventType {
     OnClose = 'OnClose',
     OnDestroy = 'OnDestroy',
 }
@@ -115,7 +82,7 @@ export class DialogController extends Controller {
      */
     open(...args: unknown[]): void {
         if (this._fadeInAnim !== null && this.content) {
-            TweenUtils.fadeIn(this.content, this._fadeInAnim, null, 0.3);
+            TweenUtils.fadeIn(this.content, this._fadeInAnim, null, 0.5);
         }
         this._open(...args);
     }
@@ -126,18 +93,18 @@ export class DialogController extends Controller {
     close(): void {
         this.node.emit(DialogController.EventType.OnClose);
 
+        if (this.mask) {
+            TweenUtils.fadeOut(this.mask, null, 0.1);
+        }
+
         if (this._fadeInAnim !== null && this.content) {
             TweenUtils.fadeOut(this.content, () => {
                 this.node.emit(DialogController.EventType.OnDestroy);
-                this.node.active = false;
+                this.node.destroy();
             }, 0.15);
         } else {
             this.node.emit(DialogController.EventType.OnDestroy);
-            this.node.active = false;
-        }
-
-        if (this.mask) {
-            TweenUtils.fadeOut(this.mask, null, 0.1);
+            this.node.destroy();
         }
     }
 

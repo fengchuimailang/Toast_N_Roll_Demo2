@@ -13,8 +13,8 @@ import {
 } from 'cc';
 
 import type { SessionLevelSummary } from '../game/session/GameSession';
-import { DialogController } from '../lbspace/DialogController';
-import { VirtualList, VirtualListLayoutType } from '../lbspace/VirtualList';
+import { DialogController } from '../lbspace/components/DialogController';
+import { VirtualList, VirtualListLayoutType } from '../lbspace/components/VirtualList';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
 
 const { ccclass } = _decorator;
@@ -29,8 +29,8 @@ interface GraphicsNodeRefs {
   graphics: Graphics | null;
 }
 
-@ccclass('LevelSelectOverlayView')
-export class LevelSelectOverlayView extends DialogController {
+@ccclass('LevelSelectOverlayController')
+export class LevelSelectOverlayController extends DialogController {
   private readonly spriteFrameLoader = new SpriteFrameLoader();
   private scaffoldReady = false;
   private backdrop: Graphics | null = null;

@@ -31,8 +31,8 @@ const LOADING_TIPS = [
   '即将出炉...',
 ] as const;
 
-@ccclass('LoadingOverlayView')
-export class LoadingOverlayView extends Component {
+@ccclass('LoadingOverlayController')
+export class LoadingOverlayController extends Component {
   private readonly spriteFrameLoader = new SpriteFrameLoader();
   private background: Graphics | null = null;
   private backgroundSprite: Sprite | null = null;

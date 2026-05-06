@@ -6,7 +6,7 @@ import { MatchDetector } from '../../domain/core/match-detector';
 import type { Cell, Customer, GridPosition, Ingredient } from '../../domain/types';
 import type { LevelConfig } from '../../domain/types/level';
 import { GameMsg } from '../../lbspace/GameMsgTypes';
-import { MsgMgr } from '../../lbspace/MsgMgr';
+import { MsgMgr } from '../../lbspace/common/MsgMgr';
 import { CocosResourceLoader } from '../../infra/CocosResourceLoader';
 import { LevelProgressStore } from '../../infra/LevelProgressStore';
 
@@ -58,6 +58,9 @@ export interface SessionStateSnapshot {
     bestStars: number;
     hasNextLevel: boolean;
     totalLevels: number;
+  };
+  wallet: {
+    coins: number;
   };
 }
 
@@ -240,6 +243,9 @@ export class GameSession {
         bestStars: this.levelProgressStore.getLevelStars(levelId),
         hasNextLevel: levelId < totalLevels,
         totalLevels,
+      },
+      wallet: {
+        coins: this.levelProgressStore.getTotalCoins(),
       },
     };
   }

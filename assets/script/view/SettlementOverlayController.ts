@@ -16,10 +16,10 @@ import {
   GameSession,
   type SessionStateSnapshot,
 } from '../game/session/GameSession';
-import { DialogController } from '../lbspace/DialogController';
+import { DialogController } from '../lbspace/components/DialogController';
 import { GameMsg, MsgMgr } from '../lbspace/lbspace';
+import { create9SliceButtonAsync } from '../lbspace/utils/ButtonFactory';
 import { SpriteFrameLoader } from '../infra/SpriteFrameLoader';
-import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -33,8 +33,8 @@ interface GraphicsNodeRefs {
   graphics: Graphics | null;
 }
 
-@ccclass('SettlementOverlayView')
-export class SettlementOverlayView extends DialogController {
+@ccclass('SettlementOverlayController')
+export class SettlementOverlayController extends DialogController {
   private readonly spriteFrameLoader = new SpriteFrameLoader();
   private scaffoldReady = false;
   private session: GameSession | null = null;

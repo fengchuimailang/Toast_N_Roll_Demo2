@@ -12,8 +12,8 @@ import {
 } from 'cc';
 
 import type { AppSettings } from '../infra/SettingsStore';
-import { DialogController } from '../lbspace/DialogController';
-import { create9SliceButtonAsync } from '../lbspace/ButtonFactory';
+import { DialogController } from '../lbspace/components/DialogController';
+import { create9SliceButtonAsync } from '../lbspace/utils/ButtonFactory';
 
 const { ccclass } = _decorator;
 
@@ -41,8 +41,8 @@ const OVERLAY_HEIGHT = 1334;
 const PANEL_WIDTH = 480;
 const PANEL_HEIGHT = 540;
 
-@ccclass('SettingsOverlayView')
-export class SettingsOverlayView extends DialogController {
+@ccclass('SettingsOverlayController')
+export class SettingsOverlayController extends DialogController {
   private mode: SettingsOverlayMode = 'settings';
   private callbacks: SettingsOverlayBindings | null = null;
   private settings: AppSettings = {

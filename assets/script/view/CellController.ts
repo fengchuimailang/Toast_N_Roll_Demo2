@@ -9,8 +9,8 @@ const VEC3_SELECTED = new Vec3(1.08, 1.08, 1);
 const VEC3_NORMAL = new Vec3(1, 1, 1);
 const COLOR_SELECTED = new Color(255, 239, 204, 255);
 
-@ccclass('CellView')
-export class CellView extends Component {
+@ccclass('CellController')
+export class CellController extends Component {
     private sprite: Sprite | null = null;
     private opacity: UIOpacity | null = null;
     private badgeNode: Node | null = null;

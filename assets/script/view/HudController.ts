@@ -91,8 +91,8 @@ function getPatienceColor(percent: number, fallback: Color): Color {
   return fallback;
 }
 
-@ccclass('HudView')
-export class HudView extends Component {
+@ccclass('HudController')
+export class HudController extends Component {
   private session: GameSession | null = null;
   private unsubscribe: (() => void) | null = null;
   private background: Graphics | null = null;
