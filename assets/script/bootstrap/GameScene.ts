@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Graphics, Label, Layers, Node, Prefab, Sprite, SpriteFrame, UITransform, Vec3, director, instantiate, resources, view } from 'cc';
+import { _decorator, Component, Layers, Node, Prefab, Sprite, SpriteFrame, UITransform, Vec3, director, instantiate, resources, view } from 'cc';
 import { GameSession } from '../game/session/GameSession';
 import { PrefabLoader } from '../lbspace/common/PrefabLoader';
 import { Utils } from '../lbspace/utils/Utils';
@@ -32,13 +32,6 @@ const HUD_SIZE = { width: 660, height: 216 };
 const BOARD_SIZE = { width: 660, height: 676 };
 const TOOLBAR_SIZE = { width: 660, height: 168 };
 
-interface FloatingActionButtonSpec {
-  fillColor: Color;
-  label: string;
-  nodeName: string;
-  position: Vec3;
-}
-
 @ccclass('GameScene')
 export class GameScene extends Component {
   private readonly assetWarmup = new CocosAssetWarmup();
@@ -56,9 +49,6 @@ export class GameScene extends Component {
   private settingsOverlayView: SettingsOverlayController | null = null;
   private tutorialOverlayView: TutorialOverlayController | null = null;
   private statusBarView: StatusBarController | null = null;
-  private levelButtonNode: Node | null = null;
-  private homeButtonNode: Node | null = null;
-  private pauseButtonNode: Node | null = null;
   private backgroundNode: Node | null = null;
   private mode: SceneMode = 'home';
   private levelSelectReturnMode: SceneMode = 'home';
@@ -126,6 +116,7 @@ export class GameScene extends Component {
     if (this.statusBarView && this.session) {
       this.statusBarView.bind(this.session);
       this.statusBarView.setShowEnergy(true);
+      this.statusBarView.onSettingsClick = () => this.openSettings('settings');
     }
 
     if (this.homeOverlayView) {
@@ -182,7 +173,6 @@ export class GameScene extends Component {
       this.ensureMessageOverlayController(),
       this.ensureLevelSelectOverlayController(),
       this.ensureSettingsOverlayController(),
-      this.ensureLevelButton(),
     ]);
 
     this.bindSharedViews();
@@ -190,6 +180,7 @@ export class GameScene extends Component {
     if (this.statusBarView && this.session) {
       this.statusBarView.bind(this.session);
       this.statusBarView.setShowEnergy(false);
+      this.statusBarView.onSettingsClick = () => this.openSettings('pause');
     }
     if (this.hudView && this.session) {
       this.hudView.bind(this.session);
@@ -391,47 +382,6 @@ export class GameScene extends Component {
     this.homeOverlayView = viewNode.addComponent(HomeOverlayController);
   }
 
-  private async ensureLevelButton(): Promise<void> {
-    if (this.levelButtonNode) {
-      return;
-    }
-
-    this.levelButtonNode = this.createFloatingActionButton({
-      fillColor: new Color(189, 128, 59, 255),
-      label: '关卡',
-      nodeName: 'OpenLevelSelectButton',
-      position: new Vec3(278, 592, 0),
-    });
-    this.levelButtonNode.on(Node.EventType.TOUCH_END, async (event) => {
-      event.propagationStopped = true;
-      await this.openLevelSelect('gameplay');
-    });
-
-    this.homeButtonNode = this.createFloatingActionButton({
-      fillColor: new Color(151, 104, 57, 255),
-      label: '大厅',
-      nodeName: 'OpenHomeButton',
-      position: new Vec3(186, 592, 0),
-    });
-    this.homeButtonNode.on(Node.EventType.TOUCH_END, (event) => {
-      event.propagationStopped = true;
-      director.loadScene(SCENE_NAMES.Lobby);
-    });
-
-    this.pauseButtonNode = this.createFloatingActionButton({
-      fillColor: new Color(120, 147, 66, 255),
-      label: '暂停',
-      nodeName: 'OpenPauseButton',
-      position: new Vec3(94, 592, 0),
-    });
-    this.pauseButtonNode.on(Node.EventType.TOUCH_END, (event) => {
-      event.propagationStopped = true;
-      this.openSettings('pause');
-    });
-
-    this.refreshLayout();
-  }
-
   private refreshLayout(): void {
     const canvasTransform = this.node.getComponent(UITransform);
     const canvasSize = canvasTransform?.contentSize;
@@ -441,7 +391,6 @@ export class GameScene extends Component {
 
     const top = canvasSize.height / 2;
     const bottom = -canvasSize.height / 2;
-    const right = canvasSize.width / 2;
     const safeAreaTop = Utils.getSafeArea().top;
     const adjustedTop = top - safeAreaTop;
 
@@ -463,63 +412,6 @@ export class GameScene extends Component {
     this.hudView?.node.setPosition(0, hudY, 0);
     this.boardView?.node.setPosition(0, boardY, 0);
     this.toolBarView?.node.setPosition(0, toolbarY, 0);
-
-    const actionButtonY = adjustedTop - 62;
-    const pauseX = right - 64;
-    const homeX = pauseX - 92;
-    const levelX = homeX - 92;
-    this.pauseButtonNode?.setPosition(pauseX, actionButtonY, 0);
-    this.homeButtonNode?.setPosition(homeX, actionButtonY, 0);
-    this.levelButtonNode?.setPosition(levelX, actionButtonY, 0);
-  }
-
-  private createFloatingActionButton(spec: FloatingActionButtonSpec): Node {
-    const buttonNode = new Node(spec.nodeName);
-    buttonNode.layer = Layers.Enum.UI_2D;
-    buttonNode.parent = this.node;
-    buttonNode.setPosition(spec.position);
-    const buttonTransform = buttonNode.addComponent(UITransform);
-    buttonTransform.setContentSize(82, 82);
-
-    const shadowNode = new Node(`${spec.nodeName}Shadow`);
-    shadowNode.layer = Layers.Enum.UI_2D;
-    shadowNode.parent = buttonNode;
-    shadowNode.setPosition(new Vec3(0, -5, 0));
-    const shadowTransform = shadowNode.addComponent(UITransform);
-    shadowTransform.setContentSize(78, 78);
-    const shadowGraphics = shadowNode.addComponent(Graphics);
-    shadowGraphics.fillColor = new Color(89, 62, 40, 34);
-    shadowGraphics.circle(0, 0, 38);
-    shadowGraphics.fill();
-
-    const baseNode = new Node(`${spec.nodeName}Base`);
-    baseNode.layer = Layers.Enum.UI_2D;
-    baseNode.parent = buttonNode;
-    baseNode.setPosition(Vec3.ZERO);
-    const baseTransform = baseNode.addComponent(UITransform);
-    baseTransform.setContentSize(82, 82);
-    const baseGraphics = baseNode.addComponent(Graphics);
-    baseGraphics.fillColor = new Color(255, 243, 223, 255);
-    baseGraphics.circle(0, 0, 41);
-    baseGraphics.fill();
-    baseGraphics.fillColor = spec.fillColor;
-    baseGraphics.circle(0, 0, 35);
-    baseGraphics.fill();
-
-    const labelNode = new Node(`${spec.nodeName}Label`);
-    labelNode.layer = Layers.Enum.UI_2D;
-    labelNode.parent = buttonNode;
-    labelNode.setPosition(Vec3.ZERO);
-    const labelTransform = labelNode.addComponent(UITransform);
-    labelTransform.setContentSize(70, 40);
-    const label = labelNode.addComponent(Label);
-    label.string = spec.label;
-    label.fontSize = 20;
-    label.lineHeight = 24;
-    label.horizontalAlign = Label.HorizontalAlign.CENTER;
-    label.verticalAlign = Label.VerticalAlign.CENTER;
-    label.color = Color.WHITE;
-    return buttonNode;
   }
 
   private async enterGameplay(levelId: number): Promise<void> {
@@ -594,15 +486,6 @@ export class GameScene extends Component {
     }
     if (this.toolBarView) {
       this.toolBarView.node.active = gameplayVisible;
-    }
-    if (this.levelButtonNode) {
-      this.levelButtonNode.active = gameplayVisible;
-    }
-    if (this.homeButtonNode) {
-      this.homeButtonNode.active = gameplayVisible;
-    }
-    if (this.pauseButtonNode) {
-      this.pauseButtonNode.active = gameplayVisible;
     }
     if (this.homeOverlayView) {
       this.homeOverlayView.node.active = mode === 'home';

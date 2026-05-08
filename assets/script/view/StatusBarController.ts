@@ -2,6 +2,7 @@ import {
   _decorator,
   Color,
   Component,
+  EventTouch,
   Graphics,
   Label,
   Layers,
@@ -36,6 +37,8 @@ export class StatusBarController extends Component {
   private energyGroup: Node | null = null
 
   private showEnergy = false
+
+  public onSettingsClick: (() => void) | null = null
 
   protected onDestroy(): void {
     this.unsubscribe?.()
@@ -79,6 +82,7 @@ export class StatusBarController extends Component {
 
     this.createCoinGroup()
     this.createEnergyGroup()
+    this.createSettingsButton()
     this.refreshLayout()
   }
 
@@ -120,6 +124,21 @@ export class StatusBarController extends Component {
     this.energyGroup.active = this.showEnergy
   }
 
+  private createSettingsButton(): void {
+    const buttonNode = new Node('SettingsButton')
+    buttonNode.layer = Layers.Enum.UI_2D
+    buttonNode.parent = this.node
+    buttonNode.addComponent(UITransform).setContentSize(36, 36)
+
+    const iconNode = this.createIcon(buttonNode, 'SettingsIcon', 36, 36)
+    this.applySprite(iconNode, 'ui/setting_button')
+
+    buttonNode.on(Node.EventType.TOUCH_END, (event: EventTouch) => {
+      event.propagationStopped = true
+      this.onSettingsClick?.()
+    })
+  }
+
   private createIcon(parent: Node, name: string, width: number, height: number): Node {
     const node = parent.getChildByName(name) ?? new Node(name)
     if (!node.parent) {
@@ -153,13 +172,18 @@ export class StatusBarController extends Component {
     const safeAreaTop = Utils.getSafeArea().top
     const barHeight = Math.max(safeAreaTop, 44)
 
+    const settingsButton = this.node.getChildByName('SettingsButton')
+    if (settingsButton) {
+      settingsButton.setPosition(-STATUS_BAR_WIDTH / 2 + PADDING_X + 10, 0, 0)
+    }
+
     const coinGroup = this.node.getChildByName('CoinGroup')
     if (coinGroup) {
       const coinIcon = coinGroup.getChildByName('CoinIcon')
       const coinLabelNode = coinGroup.getChildByName('CoinLabel')
       if (coinIcon) coinIcon.setPosition(-40, 0, 0)
       if (coinLabelNode) coinLabelNode.setPosition(8, 0, 0)
-      coinGroup.setPosition(-STATUS_BAR_WIDTH / 2 + PADDING_X + 60, barHeight / 2 - barHeight / 2, 0)
+      coinGroup.setPosition(-STATUS_BAR_WIDTH / 2 + PADDING_X + 70, barHeight / 2 - barHeight / 2, 0)
     }
 
     if (this.energyGroup && this.showEnergy) {
